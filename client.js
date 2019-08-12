@@ -1,4 +1,6 @@
 const User = require('./User');
+const Post = require('./Post');
+const BodyMeasurements = require('./BodyMeasurements');
 
 class Client extends User {
     constructor(email,

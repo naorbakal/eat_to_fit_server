@@ -5,11 +5,12 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.17.1",
-    "mongodb": "^3.3.0-beta2"
+    "mocha": "^6.2.0",
+    "mongoose": "^5.6.9"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,6 @@
   "bugs": {
     "url": "https://github.com/naorbakal/eat_to_fit_server/issues"
   },
-  "homepage": "https://github.com/naorbakal/eat_to_fit_server#readme"
+  "homepage": "https://github.com/naorbakal/eat_to_fit_server#readme",
+  "keywords": []
 }

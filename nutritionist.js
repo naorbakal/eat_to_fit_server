@@ -1,6 +1,8 @@
+const User = require('./User');
+
 // require client, posts, menus
 
-class Nutritionist{
+class Nutritionist extends User{
     constructor(email,
         password,
         firstName,

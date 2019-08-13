@@ -9,5 +9,4 @@ class BodyMeasurements{
     }
 }
 
-
 module.exports = BodyMeasurements;

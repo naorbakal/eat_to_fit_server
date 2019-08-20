@@ -21,3 +21,5 @@ class Nutritionist extends User{
             this.menusIDs = new Array;
     }
 }
+
+module.exports = Nutritionist;

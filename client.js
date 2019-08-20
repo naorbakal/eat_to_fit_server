@@ -18,3 +18,5 @@ class Client extends User {
         this.avoiding = new Array;
     }
 }
+
+module.exports = Client;

@@ -1,16 +1,14 @@
-const path = require('path');
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const userManagement = require('./server/userManagement');
-const auth = require('./server/auth');
-const app = express();
+const http = require('http');
+const app = require('./app');
+global.Promise = require('bluebird') 
 
-app.use(session({ secret: 'keyboard cat', cookie: {maxAge:269999999999}}));
-app.use(bodyParser.text());
+const port = process.env.PORT || 3000;
 
-app.use(express.static(path.resolve(__dirname, ".", "public")));
+const server = http.createServer(app);
 
-app.use('/users', userManagement);
-
-app.listen(3000, console.log('Example app listening on port 3000!'));
+/*
+process.on('unhandledRejection', function(err) {
+    console.log(err);
+});
+*/
+server.listen(port);

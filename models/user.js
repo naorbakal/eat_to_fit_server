@@ -1,34 +1,36 @@
 const mongoose = require('mongoose');
+const Nutritionist = require('../nutritionist');
+const BodyMeasurements =require ('../bodyMeasurements');
+
 const Schema = mongoose.Schema;
 
 // Create a Schema and a Model
 
 const UserSchema = new Schema({
     //User
-    sessionid: String,
+    //_id: mongoose.Schema.Types.ObjectId,
     email: String,
     password: String,
     firstName: String,
     lastName: String, 
     phoneNumber: String, 
-    birthDate: Date, 
+    birthDate: Date,
     city: String,
     profilePicture: String,
     //Client
-    nutritionistID: [Schema.Types.ObjectId],
-    allergies: Array,
-    avoiding: Array,
+    nutritionistID: Schema.Types.ObjectId,
+    allergies: {type:Array,default:undefined},
+    avoiding: {type:Array,default:undefined},
+    bodyMeasurements: {type:Array,default:undefined},
     //
     //Nutritionist
     summary: String,
     specialization: String,
     location: String,
     yearsOfExpericence: Number,
-    clientsIDs: Array,
-    PostsIDs: Array,
-    menusIDs: Array
+    clientsIDs: {type:Array,default:undefined},
+    PostsIDs: {type:Array,default:undefined},
+    menusIDs: {type:Array,default:undefined}
 });
 
-const user = mongoose.model('Users', UserSchema);
-
-module.exports = user;
+module.exports = mongoose.model('Users', UserSchema);

@@ -8,25 +8,28 @@ const Auth = require ('../auth');
 // insert new User
 router.post('/',(req, res, next) => {
 	const user = new User(req.body);
-	console.log(user.email);
 	req.session._id= user.email;
-	user
-		.save()
+	try{
+		user.save()
 		.then(result => {
-			console.log(result);
 			res.status(201).json({
 				message: "Handle Post req to /users",
 				createdUser: result
 			})
 		});
+	}
+	catch(err){
+		console.log(err.message);
+	}
+	
 });
 
 router.get('/',Auth.userAuthentication,(req,res,next)=>{
-		
-		const user = User.findOne({email : req.session._id})
+		User.findOne({email : req.session._id})
 		.then(response=>{
 			res.status(200).json(response);
 		})
 });
+
 
 module.exports = router;

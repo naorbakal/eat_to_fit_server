@@ -9,12 +9,12 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     //User
     //_id: mongoose.Schema.Types.ObjectId,
-    email: String,
-    password: String,
-    firstName: String,
-    lastName: String, 
+    email: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
+    firstName: {type: String, required: true},
+    lastName: {type: String, required: true}, 
     phoneNumber: String, 
-    birthDate: Date,
+    birthDate: {type: String, required: true},
     city: String,
     profilePicture: String,
     //Client

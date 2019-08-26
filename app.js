@@ -7,12 +7,13 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 
 
-const userRoutes = require("./api/routes/users");
+const userRoute = require("./api/routes/users");
+const registrationRoute = require("./api/routes/registration");
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
 'admin123' +
-'@eattofitdb-7frbx.mongodb.net/test?retryWrites=true&w=majority',
+'@eattofitdb-7frbx.mongodb.net/EatToFit?retryWrites=true&w=majority',
  { useNewUrlParser: true})
 .catch(err=>{
      console.log(err);
@@ -24,12 +25,14 @@ mongoose.connect('mongodb+srv://admin:'+
     resave: true,
     saveUninitialized: false,
     store: new MongoStore(
-        { url:'mongodb+srv://admin:admin123@eattofitdb-7frbx.mongodb.net/test?retryWrites=true&w=majority'}),
+        { url:'mongodb+srv://admin:admin123@eattofitdb-7frbx.mongodb.net/EatToFit?retryWrites=true&w=majority'}),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7 * 2 // two weeks
     }
 }));
- app.use("/users",userRoutes);
+
+app.use("/registration",registrationRoute) 
+app.use("/users",userRoute);
 
 
 module.exports = app;

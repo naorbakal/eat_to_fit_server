@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const bodyMeasurementsSchema = new Schema({
-    clientID: [Schema.Types.ObjectId],
+    clientEmail: String,
     weight: String, //kg
     height: String, //cm
     fatPercent: String,

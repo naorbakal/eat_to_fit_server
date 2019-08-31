@@ -20,10 +20,11 @@ router.post('/',(req, res, next) => {
         }
         else{
             const user = new User(req.body);
-            req.session._id= user.email;
-                user 
+            user
                 .save()
                 .then(result => {
+                    req.session._id= result._id;
+
                     res.status(201).json({
                         message: "Handle registration req to /registration",
                         createdUser: result
@@ -31,9 +32,11 @@ router.post('/',(req, res, next) => {
                 })
                 .catch(err=>{
                     res.status(422).json({
-                      message: err.message
+                        message: err.message
                     })
-                });  
+                });
+
+
         }
     });
 });

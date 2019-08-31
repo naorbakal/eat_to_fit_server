@@ -1,3 +1,4 @@
+
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -8,7 +9,8 @@ const MongoStore = require('connect-mongo')(session);
 
 
 const userRoute = require("./api/routes/users");
-const registrationRoute = require("./api/routes/registration");
+const loginRoute = require("./api/routes/login");
+const signUpRoute = require("./api/routes/signUp");
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
@@ -31,7 +33,8 @@ mongoose.connect('mongodb+srv://admin:'+
     }
 }));
 
-app.use("/registration",registrationRoute) 
+app.use("/signUp",signUpRoute);
+app.use("/login", loginRoute);
 app.use("/users",userRoute);
 
 

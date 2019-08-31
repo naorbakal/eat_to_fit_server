@@ -7,7 +7,7 @@ const User = require ('../../models/user');
 const Auth = require ('../auth');
 //handles login
 router.post('/',Auth.emailPasswordValidation,(req, res, next) => {
-    req.session._id= req.body.email;
+    req.session._id= req.userid;
     res.sendStatus(200);
 });
 

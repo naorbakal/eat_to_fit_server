@@ -22,4 +22,14 @@ router.post('/',(req, res, next) => {
                 });  
         });
 
+router.get('/',(req, res, next) => {
+        const bm = new BodyMeasurements(req.body);
+        bm.find({ClientID: req.session._id})
+		.then(response=>{
+			res.status(200).json(response);
+		})
+        const bm = new BodyMeasurements(req.body);
+    
+})
+
 module.exports = bodyMeasurementsRoute;

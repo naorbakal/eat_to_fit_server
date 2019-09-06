@@ -42,7 +42,7 @@ mongoose.connect('mongodb+srv://admin:'+
 app.use("/signUp",signUpRoute);
 app.use("/login", loginRoute);
 app.use("/users",userRoute);
-//app.use("/bodyMeasurements", bodyMeasurementsRoute)
+app.use("/bodyMeasurements", bodyMeasurementsRoute)
 
 
 module.exports = app;

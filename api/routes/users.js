@@ -8,7 +8,7 @@ const Auth = require ('../auth');
 // insert new User
 router.post('/',(req, res, next) => {
 	const user = new User(req.body);
-	req.session._id= user.email;
+	req.session._id= user._id;
 	try{
 		user.save()
 		.then(result => {
@@ -25,7 +25,7 @@ router.post('/',(req, res, next) => {
 });
 
 router.get('/',Auth.userAuthentication,(req,res,next)=>{
-		User.findOne({email : req.session._id})
+		User.findOne({_id: req.session._id})
 		.then(response=>{
 			res.status(200).json(response);
 		})

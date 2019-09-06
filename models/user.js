@@ -8,13 +8,13 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     //User
-    //_id: mongoose.Schema.Types.ObjectId,
+   // _id: mongoose.Schema.Types.ObjectId,
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true}, 
     phoneNumber: String, 
-    birthDate: {type: String, required: true},
+    birthDate: {type: Date, required: true},
     city: String,
     profilePicture: String,
     //Client

@@ -14,8 +14,9 @@ function userAuthentication(req,res,next){
 
 //needs encription
 function emailPasswordValidation(req,res,next){
-    
-    if(User.findOne({email:req.body.email,password:req.body.password})!==null){
+    const user = User.findOne({email:req.body.email,password:req.body.password});
+    if(user!==null){
+        req.userid = user._id;
         next();
     }
     else{

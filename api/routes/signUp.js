@@ -26,7 +26,7 @@ router.post('/',(req, res, next) => {
                     req.session._id= result._id;
 
                     res.status(201).json({
-                        message: "Handle registration req to /registration",
+                        message: "Handle SignUp req to /signUp",
                         createdUser: result
                     })
                 })

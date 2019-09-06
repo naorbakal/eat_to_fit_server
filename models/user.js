@@ -8,29 +8,31 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     //User
-   // _id: mongoose.Schema.Types.ObjectId,
+
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true}, 
-    phoneNumber: String, 
+    phoneNumber: {type: String, required: true},  
     birthDate: {type: Date, required: true},
-    city: String,
     profilePicture: String,
+    gender: {type:String, required: true},
+    isNutritionist: {type:Boolean, required: true},
+
     //Client
     nutritionistID: Schema.Types.ObjectId,
     allergies: {type:Array,default:undefined},
     avoiding: {type:Array,default:undefined},
-    bodyMeasurements: {type:Array,default:undefined},
-    //
+    //homeAddress: String,
+     
     //Nutritionist
     summary: String,
-    //specialization: String,
-    //location: String,
     yearsOfExpericence: Number,
-    clientsIDs: {type:Array,default:undefined},
-    PostsIDs: {type:Array,default:undefined},
-    menusIDs: {type:Array,default:undefined}
+    officeAddress: String,
+    
+    clientsIDs: {type:[Schema.Types.ObjectId],default:undefined},
+    PostsIDs: {type:[Schema.Types.ObjectId],default:undefined},
+    menusIDs: {type:[Schema.Types.ObjectId],default:undefined}
 });
 
 module.exports = mongoose.model('Users', UserSchema);

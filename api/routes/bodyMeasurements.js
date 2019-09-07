@@ -6,7 +6,6 @@ const BodyMeasurements = require ('../../models/bodyMeasurements');
 
 router.post('/',(req, res, next) => {
     req.body.clientID = req.session._id;
-    console.log(req.session._id);
     const bm = new BodyMeasurements(req.body);
         bm 
             .save()

@@ -21,6 +21,7 @@ router.post('/',(req, res, next) => {
                 });  
         });
 
+
 router.get('/:id',(req, res, next) => {
         const bm = new BodyMeasurements();
         bm.find({clientID: req.params.id})

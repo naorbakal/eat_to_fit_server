@@ -23,11 +23,10 @@ router.post('/',(req, res, next) => {
             user
                 .save()
                 .then(result => {
-                    req.session._id= result._id;
-
+                    user = commons.setUserLoginSignUpResponse();
                     res.status(201).json({
                         message: "Handle SignUp req to /signUp",
-                        createdUser: result
+                        user
                     })
                 })
                 .catch(err=>{

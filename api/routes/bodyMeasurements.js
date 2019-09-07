@@ -21,9 +21,10 @@ router.post('/',(req, res, next) => {
                 });  
         });
 
-router.get('/',(req, res, next) => {
-        const bm = new BodyMeasurements(req.body);
-        bm.find({clientID: req.session.userId})
+
+router.get('/:id',(req, res, next) => {
+        const bm = new BodyMeasurements();
+        bm.find({clientID: req.params.id})
         .sort({_id: -1})
         .limit(1)
         .exec()

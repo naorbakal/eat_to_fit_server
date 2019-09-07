@@ -4,6 +4,8 @@ const router = express.Router();
 
 const Product = require ('../../models/product');
 
+router.get('/',)
+
 router.post('/',(req, res, next) => {
     const product = new Product(req.body);
     product 
@@ -21,12 +23,25 @@ router.post('/',(req, res, next) => {
         });  
 });
 
-router.get('/names',(req,res,next) => {
-    Product.find().distinct('name', function(error, names) {
+router.get('/',(req,res,next) => {
+    
+    Product.find({}, function(err, products) {
+        //var productMap = {};
+    
+        //products.forEach(function(product) {
+          //productMap[product._id] = product;
+        //});
+    
+        res.status(200).json(products);  
+      });
+    
+    /*
+    Product.find().distinct('_id', function(error, names) {
         res.status(201).json({
             names : names
         })
     });
+    */
 })
 
 

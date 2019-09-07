@@ -28,6 +28,4 @@ function emailPasswordValidation(req,res,next){
     }
 );
 
-
-}
 module.exports = {userAuthentication,emailPasswordValidation};

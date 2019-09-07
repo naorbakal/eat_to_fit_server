@@ -4,8 +4,9 @@ const router = express.Router();
 
 const BodyMeasurements = require ('../../models/bodyMeasurements');
 
-// check route!!!!
 router.post('/',(req, res, next) => {
+    req.body.clientID = req.session._id;
+    console.log(req.session);
     const bm = new BodyMeasurements(req.body);
         bm 
             .save()
@@ -24,12 +25,14 @@ router.post('/',(req, res, next) => {
 
 router.get('/',(req, res, next) => {
         const bm = new BodyMeasurements(req.body);
-        bm.find({ClientID: req.session._id})
-		.then(response=>{
-			res.status(200).json(response);
-		})
-        const bm = new BodyMeasurements(req.body);
-    
-})
+        console.log(req.session._id);
+        bm.find({clientID: req.session._id})
+        .sort({_id: -1})
+        .limit(1)
+        .exec()
+        .then(response=>{
+            res.status(200).json(response);
+        })
+    });
 
-module.exports = bodyMeasurementsRoute;
+module.exports = router;

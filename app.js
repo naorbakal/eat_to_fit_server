@@ -15,6 +15,7 @@ mongoose.set('useCreateIndex', true);
 const userRoute = require("./api/routes/users");
 const loginRoute = require("./api/routes/login");
 const signUpRoute = require("./api/routes/signUp");
+const bodyMeasurementsRoute = require("./api/routes/bodyMeasurements")
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+

@@ -8,8 +8,8 @@ const ProductSchema = new Schema({
     carbs: mongoose.Types.Decimal128,
     protein: mongoose.Types.Decimal128,
     fat: mongoose.Types.Decimal128,
-    unitToGram: Number
-    //per 100 grams
+    unitType: String
+    //per 100 grams or 1 unit
 });
 
 module.exports = mongoose.model('Product', ProductSchema);

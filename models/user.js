@@ -27,7 +27,7 @@ const UserSchema = new Schema({
      
     //Nutritionist
     summary: String,
-    yearsOfExpericence: Number,
+    yearsOfExperience: Number,
     officeAddress: String,
     
     clientsIDs: {type:[Schema.Types.ObjectId],default:undefined},

@@ -32,7 +32,7 @@ router.get('/',(req,res,next) => {
           //productMap[product._id] = product;
         //});
     
-        res.status(200).json(products);  
+        res.status(200).json({data : products});  
       });
     
     /*

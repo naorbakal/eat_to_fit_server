@@ -25,8 +25,8 @@ router.post('/',(req, res, next) => {
 });
 
 router.get('/',Auth.userAuthentication,(req,res,next)=>{
-		User.findOne({_id: req.session._id})
-		.then(response=>{
+	User.findOne({_id: req.session._id})
+	.then(response=>{
 			res.status(200).json(response);
 		})
 });

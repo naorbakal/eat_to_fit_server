@@ -25,7 +25,7 @@ function emailPasswordValidation(req,res,next){
                 message:"User Unuthenticated"
             })
         }
-    }
-);
+    })
+};
 
 module.exports = {userAuthentication,emailPasswordValidation};

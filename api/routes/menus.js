@@ -9,7 +9,7 @@ const Product = require ('../../models/product');
 
 
 router.post('/',async (req, res, next) => {
-        const mealsIds =  saveMeals(req.body.meals);
+        const mealsIds =  await saveMeals(req.body.meals);
         const menu = new Menu({
             name:req.body.name,
             mealsIDs:mealsIds
@@ -49,12 +49,20 @@ async function createMeal(meal){
 }
 
 async function createMealItem(item){
-        const productId = await Product.findById(item.product._id).exec();
-        const mealItem = new MealItem({ 
-            quantity:item.quantity,
-            productId:productId
-        })
-        const user = await mealItem.save();
-        return user._id;
+        
+        const mealItem =await Product.findOne({quantity:item.quantity, productId:item.productId}).exec();
+        if(!mealItem){
+           const productId = await Product.findById(item.product._id).exec();
+            mealItem = new MealItem({ 
+               quantity:item.quantity,
+               productId:productId
+           })
+           mealItem = await mealItem.save();
+           return mealItem._id;
+        }
+        else{
+            return mealItem._id
+        }
+    
 }
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require ('../models/user');
 
+/*
 function userAuthentication(req,res,next){
     if(!req.session.userId){
         res.status(401).json({
@@ -11,13 +12,14 @@ function userAuthentication(req,res,next){
         next();
     }
 }
+*/
 
 //needs encription
 function emailPasswordValidation(req,res,next){
     User.findOne({email:req.body.email,password:req.body.password}).exec()
     .then((user) =>{
         if(user!==null){
-            req.userId=user._id;
+            req.user=user;
             next();
         }
         else{
@@ -28,4 +30,4 @@ function emailPasswordValidation(req,res,next){
     })
 };
 
-module.exports = {userAuthentication,emailPasswordValidation};
+module.exports = {emailPasswordValidation};

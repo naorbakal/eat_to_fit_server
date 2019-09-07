@@ -17,7 +17,7 @@ function emailPasswordValidation(req,res,next){
     User.findOne({email:req.body.email,password:req.body.password}).exec()
     .then((user) =>{
         if(user!==null){
-            req.userId = user._id;
+            req.userId=user._id;
             next();
         }
         else{

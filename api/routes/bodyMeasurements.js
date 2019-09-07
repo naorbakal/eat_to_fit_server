@@ -5,7 +5,7 @@ const router = express.Router();
 const BodyMeasurements = require ('../../models/bodyMeasurements');
 
 router.post('/',(req, res, next) => {
-    req.body.clientID = req.session._id;
+    req.body.clientID = req.session.userId;
     const bm = new BodyMeasurements(req.body);
         bm 
             .save()
@@ -23,9 +23,9 @@ router.post('/',(req, res, next) => {
         });
 
 router.get('/',(req, res, next) => {
+    console.log(req.session.userId);
         const bm = new BodyMeasurements(req.body);
-        console.log(req.session._id);
-        bm.find({clientID: req.session._id})
+        bm.find({clientID: req.session.userId})
         .sort({_id: -1})
         .limit(1)
         .exec()

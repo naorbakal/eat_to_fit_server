@@ -50,7 +50,7 @@ async function createMeal(meal){
 
 async function createMealItem(item){
         
-        const mealItem =await Product.findOne({quantity:item.quantity, productId:item.productId}).exec();
+        let mealItem =await Product.findOne({quantity:item.quantity, productId:item.productId}).exec();
         if(!mealItem){
            const productId = await Product.findById(item.product._id).exec();
             mealItem = new MealItem({ 

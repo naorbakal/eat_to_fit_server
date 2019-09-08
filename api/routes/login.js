@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require('express');
-const commons = require('./commons/commons');
+const commons = require('./commons/registrationUtils');
 const router = express.Router();
 //const auth = require ("./auth");
 

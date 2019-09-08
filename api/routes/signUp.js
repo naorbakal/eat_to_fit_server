@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require('express');
-const commons = require('./commons/commons');
+const commons = require('./commons/registrationUtils');
 const router = express.Router();
 //const auth = require ("./auth");
 
@@ -24,7 +24,7 @@ router.post('/',(req, res, next) => {
             user
                 .save()
                 .then(result => {
-                    user = commons.setUserLoginSignUpResponse();
+                    user = commons.setUserLoginSignUpResponse(result);
                     res.status(201).json({
                         message: "Handle SignUp req to /signUp",
                         user

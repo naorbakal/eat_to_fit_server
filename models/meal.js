@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const MealSchema = new Schema({
     title: String,
-    mealItemsIDs: Array 
+    mealItemsIds: Array 
 });
 
 module.exports = mongoose.model('Meal', MealSchema);

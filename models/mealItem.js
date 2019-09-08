@@ -7,6 +7,6 @@ const MealItemSchema = new Schema({
     quantity: {type:Number ,default:undefined},
 });
 
-module.exports = mongoose.model(' MealItem', MealItemSchema);
+module.exports = mongoose.model('MealItem', MealItemSchema);
 
 

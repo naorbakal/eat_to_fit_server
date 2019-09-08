@@ -20,7 +20,7 @@ router.post('/',(req, res, next) => {
             })
         }
         else{
-            const user = new User(req.body);
+            let user = new User(req.body);
             user
                 .save()
                 .then(result => {

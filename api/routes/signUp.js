@@ -20,12 +20,12 @@ router.post('/',(req, res, next) => {
             })
         }
         else{
-            const user = new User(req.body);
+            let user = new User(req.body);
             user
                 .save()
                 .then(result => {
                     user = commons.setUserLoginSignUpResponse(result);
-                    res.status(201).json({
+                    res.status(201).json({  
                         message: "Handle SignUp req to /signUp",
                         user
                     })

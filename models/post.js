@@ -3,11 +3,10 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     authorID: [Schema.Types.ObjectId], //nutritionist
-    title: String,
+    headline: String,
     content: String,
-    brief: String,
-    pictureUrl: String,
-    date: Date
+    image: String,
+    creationDate: Date
 });
 
 const Posts = mongoose.model('Posts', PostSchema);

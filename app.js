@@ -17,6 +17,7 @@ const loginRoute = require("./api/routes/login");
 const signUpRoute = require("./api/routes/signUp");
 const bodyMeasurementsRoute = require("./api/routes/bodyMeasurements");
 const productsRoute = require("./api/routes/products");
+const menus = require ("./api/routes/menus");
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
@@ -46,6 +47,7 @@ app.use("/login", loginRoute);
 app.use("/users",userRoute);
 app.use("/bodyMeasurements", bodyMeasurementsRoute);
 app.use("/products", productsRoute);
+app.use("/menus",menus);
 
 
 module.exports = app;

@@ -21,8 +21,8 @@ const UserSchema = new Schema({
 
     //Client
     nutritionistID: Schema.Types.ObjectId,
-    allergies: {type:Array,default:undefined},
-    avoiding: {type:Array,default:undefined},
+    allergies: {type:Array,default:[]},
+    avoiding: {type:Array,default:[]},
     //homeAddress: String,
      
     //Nutritionist
@@ -30,8 +30,8 @@ const UserSchema = new Schema({
     yearsOfExperience: Number,
     officeAddress: String,
     
-    clientsIDs: {type:[Schema.Types.ObjectId],default:undefined},
-    PostsIDs: {type:[Schema.Types.ObjectId],default:undefined},
+    clientsIDs: {type:[Schema.Types.ObjectId],default:[]},
+    PostsIDs: {type:[Schema.Types.ObjectId],default:[]},
     menusIDs: {type:[Schema.Types.ObjectId],default:[]}
 });
 

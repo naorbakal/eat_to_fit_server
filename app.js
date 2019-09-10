@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 
-mongoose.set('useUnifiedTopology', true);
+//mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
@@ -24,9 +24,9 @@ mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
 'admin123' +
 '@eattofitdb-7frbx.mongodb.net/EatToFit?retryWrites=true&w=majority',
- { useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+{useUnifiedTopology: true, 
+  useNewUrlParser: true}
+)
 .catch(err=>{
      console.log(err);
  });

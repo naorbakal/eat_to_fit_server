@@ -28,7 +28,7 @@ async function getMealItems(mealItemsIds){
         const product = await Product.findById(mealItem.productId).exec();
         return({
             quantity:quantity,
-            product:{id:product._id,name:product.name,unitType:product.unitType}
+            product:{_id:product._id,name:product.name,unitType:product.unitType}
         })
     });
     const mealItems = await Promise.all(pArray);

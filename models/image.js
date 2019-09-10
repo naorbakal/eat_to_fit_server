@@ -3,9 +3,10 @@ require('mongoose-double')(mongoose);
 
 const Schema = mongoose.Schema;
 
-const ProfilePictureSchema = new Schema({
+const ImageSchema = new Schema({
     type:String,
-    data:Buffer
+    data:Buffer,
+    url:String
 })
 
-module.exports = mongoose.model('ProfilePicture', ProfilePictureSchema);
+module.exports = mongoose.model('Image', ImageSchema);

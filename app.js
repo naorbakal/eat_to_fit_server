@@ -48,6 +48,7 @@ app.use("/users",userRoute);
 app.use("/bodyMeasurements", bodyMeasurementsRoute);
 app.use("/products", productsRoute);
 app.use("/menus",menus);
+app.use('/images', express.static(__dirname + '/images'));
 
 
 module.exports = app;

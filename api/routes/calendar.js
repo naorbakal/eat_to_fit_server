@@ -27,6 +27,9 @@ router.get('/', async (req, res, next) => {
         items = await Calendar.find({clientID : user._id}).exec();
     }
 
+    res.status(200).json(items);
+
+    /*
     items.forEach(element => {
         calendarMap.set(element.date, 
                         {name : element.name, isAmeeting : element.isAmeeting});
@@ -35,6 +38,7 @@ router.get('/', async (req, res, next) => {
         res.status(200).json({
         data : calendarMap
         })
+    */
 })
 
 module.exports = router;

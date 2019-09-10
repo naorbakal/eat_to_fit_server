@@ -5,10 +5,10 @@ const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
     name: String,
-    calories: mongoose.Schema.Types.Double,
-    carbs: mongoose.Schema.Types.Double,
-    protein: mongoose.Schema.Types.Double,
-    fat: mongoose.Schema.Types.Double,
+    calories: Number,
+    carbs: Number,
+    protein: Number,
+    fat: Number,
     unitType: String,
     unitQuantity: Number
     //per 100 grams or 1 unit

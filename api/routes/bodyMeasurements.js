@@ -24,13 +24,17 @@ router.post('/',(req, res, next) => {
 
 router.get('/',(req, res, next) => {
         //const bm = new BodyMeasurements();
+
+
         console.log(req.query.id);
+
+
         BodyMeasurements.find({clientID: req.query.id})
         .sort({_id: -1})
         .limit(1)
         .exec()
         .then(response=>{
-            res.status(200).json(response);
+            res.status(200).json(response[0]);
         })
     });
 

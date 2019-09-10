@@ -18,7 +18,8 @@ const signUpRoute = require("./api/routes/signUp");
 const bodyMeasurementsRoute = require("./api/routes/bodyMeasurements");
 const productsRoute = require("./api/routes/products");
 const menusRoute = require ("./api/routes/menus");
-const nutritionistsRoute = require("./api/routes/nutritionists")
+const nutritionistsRoute = require("./api/routes/nutritionists");
+const calendarRoute = require("./api/routes/calendar");
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
@@ -50,6 +51,7 @@ app.use("/bodyMeasurements", bodyMeasurementsRoute);
 app.use("/products", productsRoute);
 app.use("/menus",menusRoute);
 app.use("/nutritionists",nutritionistsRoute)
+app.use("/calendar", calendarRoute);
 
 
 module.exports = app;

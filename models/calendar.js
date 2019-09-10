@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('mongoose-double')(mongoose);
 const Schema = mongoose.Schema;
 
-const CalenderSchema = new Schema({
+const CalendarSchema = new Schema({
     name: String,
     date: Date,
     nutritionistID: Schema.Types.ObjectId,
@@ -10,6 +10,6 @@ const CalenderSchema = new Schema({
     isAmeeting: Boolean
 });
 
-const Calender = mongoose.model('Calender', CalenderSchema);
+const calendar = mongoose.model('calendar', CalendarSchema);
 
-module.exports = Calender;
+module.exports = calendar;

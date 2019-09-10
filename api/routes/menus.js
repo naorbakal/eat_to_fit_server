@@ -35,13 +35,19 @@ router.post('/',async (req, res, next) => {
 
 router.get('/',async (req,res,next)=>{
         let user = await User.findById(req.query.id).exec();
-        if(user){
+        if(!user.isNutritionist){
             let menuId = user.menusIDs[user.menusIDs.length - req.query.offset];
             let menu = await Menu.findById(menuId).exec();
             menu = await menuUtils.createMenuJson(menu);
             res.status(200).json({
                 name:menu.name,
                 meals:menu.meals
+            })
+        }
+        else{ //nutritionist
+            let menus = await Menu.find({ author : req.query.id}).exec();
+            res.status(200).json({
+                menus
             })
         }
 });

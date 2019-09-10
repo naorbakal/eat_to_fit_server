@@ -6,8 +6,8 @@ const bodyMeasurementsSchema = new Schema({
     clientID: Schema.Types.ObjectId,
     weight: Number, //kg
     height: Number, //cm
-    fatPercent: mongoose.Schema.Types.Double,
-    bodyMassPercent: mongoose.Schema.Types.Double,
+    fatPercent: Number,
+    bodyMassPercent: Number,
     date: Date
 });
 

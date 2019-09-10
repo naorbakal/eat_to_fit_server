@@ -32,4 +32,17 @@ router.post('/images',upload.single('profilePicture'),(req,res,naxt)=>{
 	res.sendStatus(200);
 });
 
+router.get('/',(req,res,next) => {
+    
+    User.find({}, function(err, users) {
+        //var productMap = {};
+    
+        //products.forEach(function(product) {
+          //productMap[product._id] = product;
+        //});
+    
+        res.status(200).json(users);  
+	  });
+});
+
 module.exports = router;

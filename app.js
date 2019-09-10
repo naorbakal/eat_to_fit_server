@@ -52,6 +52,7 @@ app.use("/products", productsRoute);
 app.use("/menus",menusRoute);
 app.use("/nutritionists",nutritionistsRoute)
 app.use("/calendar", calendarRoute);
+app.use('/images', express.static(__dirname + '/images'));
 
 
 module.exports = app;

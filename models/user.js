@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     lastName: {type: String, required: true}, 
     phoneNumber: {type: String, required: true},  
     birthDate: {type: Date, required: true},
-    profilePicture: String,
+    profilePicture: Schema.Types.ObjectId,
     gender: {type:String, required: true},
     isNutritionist: {type:Boolean, required: true},
 

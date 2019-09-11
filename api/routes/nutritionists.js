@@ -60,10 +60,17 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 	let nutritionist = await User.findById(req.params.nutritionistID).exec();
 
 		 await Promise.all(nutritionist.clientsIDs.map(async clientID=>{
-			const result = await User.find({_id : clientID}).select('_id profilePicture gender firstName lastName email').exec()
-			clients.push({client : result});
+			const result = await User.findById(clientID).select('_id profilePicture gender firstName lastName email').exec()
+			clients.push({
+				_id:result._id,
+				profilePicture: result.profilePicture,
+				gender: result.gender,
+				firstName:result.firstName,
+				lastName:result.lastName,
+				email:result.email
+			});
 	}));
-	res.status(200).json({clients});
+	res.status(200).type('json').send(JSON.stringify(clients));
 }
 	else{
 		res.status(400).json({message: "Enter nutritionist id to get info"})

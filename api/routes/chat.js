@@ -10,50 +10,44 @@ router.get('/',async (req, res, next) => {
     let nutritionistID = req.query.nutritionistID;
     const clientID = req.query.clientID;
     const offset = req.query.offset;
+    const isNutritionist = req.query.isNutritionist;
     const chatSize = 10;
-    var messages;
+    let messages;
     let chat;
+    let receiverName;
 
-    if(!nutritionistID){
+    if(!isNutritionist){
         User.findById(clientID).then(client => {
             client.hasNewMessage = false;
             client.save();
         })
-        const client = await User.findById(clientID).exec();
-        nutritionistID = client.nutritionistID;
+        User.findById(nutritionistID).then(nut => {
+            receiverName = nut.firstName + " " + nut.lastName;
+        })
+
     }
     else{
         User.findById(nutritionistID).then(nut => {
             nut.hasNewMessage = false;
             nut.save();
         })
+        User.findById(clientID).then(client => {
+            receiverName = client.firstName + " " + client.lastName;
+        })
     }
 
+    
     let skip = (offset - 1)*chatSize;
     let limit = offset * chatSize;
-    /*
-    if(!nutritionistID){
-        messagesIDs = await Chat.find({clientID : clientID}).sort({date: -1}).skip(skip).limit(limit).exec();
-        if(offset == 1){
-            User.findById(clientID).then(client => {
-                client.hasNewMessage = false;
-                client.save();
-            })
-        }
-    }else{
-        */
+
     chat = await Chat.findOne({nutritionistID : nutritionistID, clientID : clientID}).exec();
     if(!chat){
         chat = new Chat({nutritionistID: nutritionistID, clientID: clientID});
         await chat.save();
     }
     messages = await Message.find({chatID : chat._id}).sort({date: -1}).skip(skip).limit(limit).exec();
-    User.findById(nutritionistID).then(nut => {
-    nut.hasNewMessage = false;
-    nut.save();
-    })
 
-    res.status(200).json({chatID: chat._id, messages: messages});
+    res.status(200).json({chatID: chat._id, messages: messages, receiverName: receiverName});
     // update has new message
     
 });
@@ -69,7 +63,5 @@ router.post('/',async (req, res, next) => {
         })
     })
 })
-
-
 
 module.exports = router;

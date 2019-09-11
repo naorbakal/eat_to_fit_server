@@ -10,7 +10,8 @@ function setUserLoginSignUpResponse(user){
         lastName:user.lastName,
         isNutritionist:user.isNutritionist,
         profilePicture:user.profilePicture,
-        nutritionistID:user.nutritionistID
+        nutritionistID:user.nutritionistID,
+        hasNewMessage:user.hasNewMessage
     }
 }
 

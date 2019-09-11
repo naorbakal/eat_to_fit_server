@@ -70,7 +70,7 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 				email:result.email
 			});
 	}));
-	res.status(200).type('json').send(JSON.stringify(clients));
+	res.status(200).json({clients});
 }
 	else{
 		res.status(400).json({message: "Enter nutritionist id to get info"})
@@ -90,9 +90,7 @@ router.get('/:nutritionistID/users/:clientID',async (req,res,next)=>{
 		});
 	}
 	else{
-		res.status(200).json({
-			client
-		})
+		res.status(200).json({client});
 	}
 })
 

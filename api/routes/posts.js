@@ -37,7 +37,7 @@ router.get('/',async(req,res,next)=>{
         posts.push(postsfromDb[i]);
     }  
     res.status(200).json({
-         
+         posts
     });  
 })
 

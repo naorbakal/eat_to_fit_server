@@ -33,8 +33,8 @@ router.post('/',async (req, res, next) => {
         });
 });
 
-router.get('/',async (req,res,next)=>{
-        let user = await User.findById(req.query.id).exec();
+router.get('/clients/:id',async (req,res,next)=>{
+        let user = await User.findById(req.params.id).exec();
         if(!user.isNutritionist){
             let menuId = user.menusIDs[user.menusIDs.length - req.query.offset];
             let menu = await Menu.findById(menuId).exec();
@@ -46,11 +46,23 @@ router.get('/',async (req,res,next)=>{
         }
         else{ //nutritionist
             let menus = await Menu.find({ author : req.query.id}).exec();
+            menu = await menuUtils.createMenuJson(menu);
             res.status(200).json({
                 menus
             })
         }
 });
+
+router.get('/nutritionists/:nutritionistId',async(req,res,next)=>{
+    const menus = await Menu.find({author:req.params.nutritionistId}).sort({date: -1}).select('_id name').exec();
+    res.status(200).json({menus});
+})
+
+router.get('/:id',async (req,res,next)=>{
+    let menu =await Menu.findById(req.params.id).exec();
+    menu = await menuUtils.createMenuJson(menu);
+    res.status(200).json({menu});
+})
 
  async function saveMeals(mealsRequestObj){
         const pArray = mealsRequestObj.map(async element =>{

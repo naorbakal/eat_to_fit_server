@@ -14,6 +14,10 @@ async function createMenuJson(menu){
         })
     })
     const meals = await Promise.all(pArray);
+    console.log({
+        name:name,
+        meals:meals
+    })
     return {
         name:name,
         meals:meals

@@ -30,9 +30,11 @@ router.get('/',async (req, res, next) => {
         User.findById(nutritionistID).then(nut => {
             nut.hasNewMessage = false;
             nut.clientsIDs.forEach(nutClient => {
-                if(nutClient.hasNewMessage){
+                if(nutClient.hasNewMessage === true && nutClient.clientID !== clientID){
                     nut.hasNewMessage = true;
-                    return;
+                }
+                else if(nutClient.clientID === clientID){
+                    nut.hasNewMessage = false;
                 }
             })
         })

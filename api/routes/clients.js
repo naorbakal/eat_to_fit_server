@@ -14,11 +14,13 @@ router.get('/:id/menus',async (req,res,next)=>{
         if(menu === null){
             res.sendStatus(404);
         }
-        menu = await menuUtils.createMenuJson(menu);
-        res.status(200).json({
-            name:menu.name,
-            meals:menu.meals
-        })
+        else{
+            menu = await menuUtils.createMenuJson(menu);
+            res.status(200).json({
+                name:menu.name,
+                meals:menu.meals
+            });
+        }
 });
 
 router.post('/:id/menus',async (req, res, next) => {

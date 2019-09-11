@@ -20,6 +20,7 @@ const bodyMeasurementsRoute = require("./api/routes/bodyMeasurements");
 const productsRoute = require("./api/routes/products");
 const menusRoute = require ("./api/routes/menus");
 const nutritionistsRoute = require("./api/routes/nutritionists");
+const clientsRoute = require("./api/routes/clients");
 const calendarRoute = require("./api/routes/calendar");
 const postsRoute = require ("./api/routes/posts");
 const chatRoute = require("./api/routes/chat");
@@ -60,6 +61,7 @@ app.use("/calendar", calendarRoute);
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/posts',postsRoute);
 app.use('/chat',chatRoute);
+app.use('/clients',clientsRoute);
 
 
 module.exports = app;

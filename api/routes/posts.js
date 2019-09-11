@@ -7,7 +7,6 @@ const Post = require('../../models/post');
 
 
 router.post('/',ImageUtils.getUploadObj().single('image'),async(req,res,next)=>{
-
     let post = new Post({
         authorID: req.body.authorID,
         headline: req.body.headline,

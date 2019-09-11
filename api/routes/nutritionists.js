@@ -4,6 +4,8 @@ const router = express.Router();
 //const auth = require ("./auth");
 
 const User = require ('../../models/user');
+const Menu = require ('../../models/menu');
+
 // insert new User
 
 router.post('/:nutritionistID/users',async (req,res,next)=>{
@@ -94,6 +96,12 @@ router.get('/:nutritionistID/users/:clientID',async (req,res,next)=>{
 	else{
 		res.status(200).json({client});
 	}
+})
+
+//menus
+router.get('/:nutritionistId/menus',async(req,res,next)=>{
+    const menus = await Menu.find({author:req.params.nutritionistId}).sort({date: -1}).select('_id name').exec();
+    res.status(200).json({menus});
 })
 
 module.exports = router;

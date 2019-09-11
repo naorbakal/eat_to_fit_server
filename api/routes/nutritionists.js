@@ -81,12 +81,12 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 
 router.get('/:nutritionistID/users/:clientID',async (req,res,next)=>{
 	const client = await User.findById(req.params.clientID).select('_id profilePicture gender firstName lastName email').exec();
-	if(client === null){
+	if(client === null ){
 		res.status(404).json({
 			message: 'A user with the id: '+req.params.clientID+ ' doesnt exists'
 		});
 	}
-	else if(req.params.nutritionistID !== client.nutritionistID.toString()){
+	else if(client.nutritionistID===undefined || (req.params.nutritionistID !== client.nutritionistID.toString())){
 		res.status(403).json({
 			message:'The user with id: ' + req.params.clientID + ' is not a client of ' + req.params.nutritionistID
 		});

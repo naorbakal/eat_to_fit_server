@@ -32,9 +32,9 @@ router.get('/',(req,res,next) => {
 	  });
 });
 
-router.post('/images',ImageUtils.getUploadObj().single('image'),async(req,res,naxt)=>{
+router.post('/:id/images',ImageUtils.getUploadObj().single('image'),async(req,res,naxt)=>{
 	const image = await saveImageFileInDB(file);
-	User.findById(req.body.userId).
+	User.findById(req.params.id).
 	then((user)=>{
 		user.profilePicture = result._id;
 		user.save();

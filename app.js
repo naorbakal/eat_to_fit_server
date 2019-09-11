@@ -21,6 +21,7 @@ const menusRoute = require ("./api/routes/menus");
 const nutritionistsRoute = require("./api/routes/nutritionists");
 const calendarRoute = require("./api/routes/calendar");
 const postsRoute = require ("./api/routes/posts");
+const chatRoute = require("./api/routes/chat");
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
@@ -55,6 +56,7 @@ app.use("/nutritionists",nutritionistsRoute)
 app.use("/calendar", calendarRoute);
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/posts',postsRoute);
+app.use('/chat',chatRoute);
 
 
 module.exports = app;

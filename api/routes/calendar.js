@@ -11,8 +11,8 @@ router.post('/',(req, res, next) => {
         res.status(201).json({
             messege : "Event added",
             event: calendar
-        })
-    })
+        });
+    });
 });
 
 router.get('/', async (req, res, next) => {

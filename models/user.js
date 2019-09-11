@@ -30,7 +30,8 @@ const UserSchema = new Schema({
     yearsOfExperience: Number,
     officeAddress: String,
     
-    clientsIDs: {type:[Schema.Types.ObjectId],default:[]},
+    clientsIDs: {type:Array,default:[]},
+    PostsIDs: {type:[Schema.Types.ObjectId],default:[]},
     menusIDs: {type:[Schema.Types.ObjectId],default:[]}
 });
 

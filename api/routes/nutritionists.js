@@ -30,7 +30,7 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 			}
 			else{
 			client.nutritionistID = nutritionist;
-			nutritionist.clientsIDs.push(client._id);
+			nutritionist.clientsIDs.push({clientID : client._id , hasNewMessage : false});
 			client.save()
 			.then(()=>{
 				nutritionist.save().
@@ -58,11 +58,18 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 
 router.get('/:nutritionistID/users', async (req,res,next) =>{
 	let clients = new Array;
+	let hasNewMessage;
 	if(req.params.nutritionistID){
 	let nutritionist = await User.findById(req.params.nutritionistID).exec();
 
 		 await Promise.all(nutritionist.clientsIDs.map(async clientID=>{
-			const result = await User.findById(clientID).select('_id profilePicture gender firstName lastName email hasNewMessage').exec()
+			const result = await User.findById(clientID).select('_id profilePicture gender firstName lastName email hasNewMessage').exec();
+			nutritionist.clientsIDs.forEach(nutClient => {
+				if(nutClient.clientID === clientID){
+					hasNewMessage = nutClient.hasNewMessage;
+				}
+			});
+
 			clients.push({
 				_id:result._id,
 				profilePicture: result.profilePicture,
@@ -70,8 +77,7 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 				firstName:result.firstName,
 				lastName:result.lastName,
 				email:result.email,
-				hasNewMessage:result.hasNewMessage
-				
+				hasNewMessage: hasNewMessage
 			});
 	}));
 	res.status(200).json({clients});

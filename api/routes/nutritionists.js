@@ -101,7 +101,7 @@ router.get('/:nutritionistID/users/:clientID',async (req,res,next)=>{
 //menus
 router.get('/:nutritionistId/menus',async(req,res,next)=>{
 	const menus = await Menu.find({author:req.params.nutritionistId}).sort({date: -1}).select('_id name').exec();
-	if(menus === null || menus.length===0){
+	if(menus === null){
 		res.sendStatus(404);
 	}
 	else{

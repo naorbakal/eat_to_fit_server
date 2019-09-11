@@ -15,7 +15,6 @@ router.get('/:id',async (req,res,next)=>{
             name:menu.name,
             meals:menu.meals
         })
-
 });
 
 router.post('/:id',async (req, res, next) => {

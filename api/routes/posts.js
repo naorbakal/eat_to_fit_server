@@ -27,13 +27,13 @@ router.post('/',ImageUtils.getUploadObj().single('image'),async(req,res,next)=>{
 router.get('/',async(req,res,next)=>{
     const pageSize=10;
     const offset = req.query.offset;
-    const from = (offset-1)*pageSizeze;
+    const from = (offset-1)*pageSize;
     const nutId = req.query.nutritionistID;
     let posts = new Array();
 
-    let postsfromDb = await Post.find({authorID:nutId}).sort({creationDate:-1}).limit(offset*pageSizeze).exec();
-    const to = offset*pageSizeze < postsfromDb.length ? offset*pageSizeze:postsfromDb.length;
-    console.log(to);
+    let postsfromDb = await Post.find({authorID:nutId}).sort({creationDate:-1}).limit(offset*pageSize).exec();
+    console.log(postsfromDb);
+    const to = offset*pageSize < postsfromDb.length ? offset*pageSize:postsfromDb.length;
     for (let i=from;i<to;i++){
         posts.push(postsfromDb[i]);
     }  

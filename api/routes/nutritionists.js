@@ -63,7 +63,6 @@ router.get('/users', async (req,res,next) =>{
 			client = User.find({_id : clientID}).select('_id profilePicture gender firstName lastName email').exec(function(err,result){
 				let bool = false;
 				result.hasNewMessage = bool;
-				console.log(result);
 				clientsArr.push({client : result, hasNewMessage: bool} );
 				res.status(200).json({clients : clientsArr});
 			});
@@ -73,7 +72,5 @@ router.get('/users', async (req,res,next) =>{
 		res.status(400).json({message: "Enter nutritionist id to get info"})
 	}
 });
-
-
 
 module.exports = router;

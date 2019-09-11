@@ -31,7 +31,6 @@ const UserSchema = new Schema({
     officeAddress: String,
     
     clientsIDs: {type:[Schema.Types.ObjectId],default:[]},
-    PostsIDs: {type:[Schema.Types.ObjectId],default:[]},
     menusIDs: {type:[Schema.Types.ObjectId],default:[]}
 });
 

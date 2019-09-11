@@ -31,14 +31,14 @@ router.get('/',async(req,res,next)=>{
     const nutId = req.query.nutritionistID;
     let posts = new Array();
 
-    let postsfromDb = await Post.find({authorID:nutId}).sort({creationDate:-1}).limit(offset*pageSizeze).exec();
+    let postsfromDb = await Post.find({authorID:nutId}).sort({creationDate:-1}).limit(offset*pageSize).exec();
     const to = offset*pageSize < postsfromDb.length ? offset*pageSize:postsfromDb.length;
     console.log(to);
     for (let i=from;i<to;i++){
         posts.push(postsfromDb[i]);
     }  
     res.status(200).json({
-         posts
+         
     });  
 })
 

@@ -11,7 +11,7 @@ router.get('/',async (req, res, next) => {
     const clientID = req.query.clientID;
     const offset = req.query.offset;
     const isNutritionist = req.query.isNutritionist;
-    const chatSize = 10;
+    const chatSize = 100;
     let messages;
     let chat;
     let receiverName;
@@ -29,8 +29,14 @@ router.get('/',async (req, res, next) => {
     else{
         User.findById(nutritionistID).then(nut => {
             nut.hasNewMessage = false;
-            nut.save();
+            nut.clientsIDs.forEach(nutClient => {
+                if(nutClient.hasNewMessage){
+                    nut.hasNewMessage = true;
+                    return;
+                }
+            })
         })
+        nut.save();
         User.findById(clientID).then(client => {
             receiverName = client.firstName + " " + client.lastName;
         })
@@ -57,7 +63,15 @@ router.post('/',async (req, res, next) => {
     let user;
     msg.save().then(async result => {
         user = await User.findById(result.receiver).exec();
-        user.hasNewMessage = true;
+        if(user.isNutritionist){
+            user.clientsIDs.forEach(nutClient => {
+                if(nutClient === result.sender){
+                    nutClient.hasNewMessage = true;
+                    return;
+                }                
+            });
+        }
+        user.hasNewMessage = true;      
         user.save().then(result => {
             res.status(200).json({message : "message sent"});
         })

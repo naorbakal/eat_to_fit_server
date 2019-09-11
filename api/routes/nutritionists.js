@@ -28,7 +28,7 @@ router.post('/users',async (req,res,next)=>{
 			}
 			else{
 			client.nutritionistID = nutritionist;
-			nutritionist.clientsIDs.push(client._id);
+			nutritionist.clientsIDs.push({clientID : client._id , hasNewMessage : false});
 			client.save()
 			.then(()=>{
 				nutritionist.save().
@@ -59,12 +59,11 @@ router.get('/users', async (req,res,next) =>{
 	if(req.query.nutritionistID){
 	let nutritionist = await User.findById(req.query.nutritionistID).exec();
 
-		nutritionist.clientsIDs.forEach(clientID => {
-			client = User.find({_id : clientID}).select('_id profilePicture gender firstName lastName email').exec(function(err,result){
-				let bool = false;
+		nutritionist.clientsIDs.forEach(nutClient => {
+			client = User.find({_id : nutClient.clientID}).select('_id profilePicture gender firstName lastName email').exec(function(err,result){
 				result.hasNewMessage = bool;
 				console.log(result);
-				clientsArr.push({client : result, hasNewMessage: bool} );
+				clientsArr.push({client : result, hasNewMessage: client.hasNewMessage} );
 				res.status(200).json({clients : clientsArr});
 			});
 		});

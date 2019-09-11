@@ -28,7 +28,7 @@ router.get('/',async(req,res,next)=>{
     const pageSize=10;
     const offset = req.query.offset;
     const from = (offset-1)*pageSizeze;
-    const nutId = req.query.nutritionistId;
+    const nutId = req.query.nutritionistID;
     let posts = new Array();
 
     let postsfromDb = await Post.find({authorID:nutId}).sort({creationDate:-1}).limit(offset*pageSizeze).exec();

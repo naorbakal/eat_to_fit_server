@@ -15,9 +15,24 @@ router.post('/users',async (req,res,next)=>{
 	.then(client=>{
 			client.nutritionistID = nutritionist;
 			nutritionist.clientsIDs.push(client._id);
-			client.save();
-			nutritionist.save();
-			res.status(200).json({message: "Client added"});
+			client.save()
+			.then(()=>{
+				nutritionist.save().
+					then(()=>{
+					res.status(200).json({message: "Client added"});
+					})
+					.catch(err=>{
+						res.status(500).json({
+							message: "Problem with assigning nutritionist to client "
+						})
+					})
+			})
+			.catch(err=>{
+				res.status(500).json({
+					message: "Problem with assigning client to nutritionist"
+				})
+			})
+
 		})
 	}
 	else { // error

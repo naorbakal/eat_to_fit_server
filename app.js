@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
+const boolParser = require('express-query-boolean');
 
 //mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
@@ -35,6 +36,8 @@ mongoose.connect('mongodb+srv://admin:'+
  });
 
  app.use(bodyParser.json());
+ app.use(boolParser());
+
  app.use(session({
     secret: 'my-secret',
     resave: true,

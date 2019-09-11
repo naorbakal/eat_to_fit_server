@@ -32,7 +32,6 @@ router.get('/',async(req,res,next)=>{
     let posts = new Array();
 
     let postsfromDb = await Post.find({authorID:nutId}).sort({creationDate:-1}).limit(offset*pageSize).exec();
-    console.log(postsfromDb);
     const to = offset*pageSize < postsfromDb.length ? offset*pageSize:postsfromDb.length;
     for (let i=from;i<to;i++){
         posts.push(postsfromDb[i]);

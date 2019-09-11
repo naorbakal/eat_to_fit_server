@@ -59,16 +59,15 @@ router.get('/users', async (req,res,next) =>{
 	if(req.query.nutritionistID){
 	let nutritionist = await User.findById(req.query.nutritionistID).exec();
 
-		nutritionist.clientsIDs.forEach(clientID => {
-			client = User.find({_id : clientID}).select('_id profilePicture gender firstName lastName email').exec(function(err,result){
-				let bool = false;
-				result.hasNewMessage = bool;
-				clientsArr.push({client : result, hasNewMessage: bool} );
-				res.status(200).json({clients : clientsArr});
-			});
-		});
-		
-	}else{
+		 await Promise.all(nutritionist.clientsIDs.map(async clientID=>{
+			const result = await User.find({_id : clientID}).select('_id profilePicture gender firstName lastName email').exec()
+			let bool = false;
+			result.hasNewMessage = bool;
+			clientsArr.push({client : result, hasNewMessage: bool});
+	}));
+	res.status(200).json({clients : clientsArr});
+}
+	else{
 		res.status(400).json({message: "Enter nutritionist id to get info"})
 	}
 });

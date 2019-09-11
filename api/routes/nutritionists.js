@@ -21,7 +21,7 @@ router.post('/users',async (req,res,next)=>{
 			else if(client.nutritionistID === nutritionist_id){
 				res.sendStatus(200);
 			}
-			else if(client.nutritionistID !== null){
+			else if(client.nutritionistID !== null || client.nutritionistID !==undefined ){
 				res.status(400).json({
 					message:client.firstName+' ' + client.lastName +' is allready assigned to a different nutritionist'
 				});

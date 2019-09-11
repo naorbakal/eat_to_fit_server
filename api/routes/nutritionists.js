@@ -13,6 +13,20 @@ router.post('/users',async (req,res,next)=>{
 	if(req.body.clientEmail){
 	User.findOne({email: req.body.clientEmail})
 	.then(client=>{
+			if(client === null){
+				res.status(404).json({
+					message:'Client with the email' + req.body.clientEmail +' doesnt exist'
+				});
+			}
+			else if(client.nutritionistID === nutritionist_id){
+				res.sendStatus(200);
+			}
+			else if(client.nutritionistID !== null){
+				res.status(400).json({
+					message:client.firstName+' ' + client.lastName +' is allready assigned to a different nutritionist'
+				});
+			}
+			else{
 			client.nutritionistID = nutritionist;
 			nutritionist.clientsIDs.push(client._id);
 			client.save()
@@ -32,9 +46,9 @@ router.post('/users',async (req,res,next)=>{
 					message: "Problem with assigning client to nutritionist"
 				})
 			})
-
-		})
-	}
+		}
+	});	
+}
 	else { // error
 			//res.status(200).json(nutritionist.clientsIDs);		
 	  }

@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     isNutritionist: {type:Boolean, required: true},
 
     //Client
-    nutritionistID: Schema.Types.ObjectId,
+    nutritionistID: {type:Schema.Types.ObjectId, default:null},
     allergies: {type:Array,default:[]},
     avoiding: {type:Array,default:[]},
     //homeAddress: String,

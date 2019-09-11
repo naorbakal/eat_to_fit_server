@@ -32,29 +32,20 @@ router.get('/',(req,res,next) => {
 	  });
 });
 
-router.post('/images',ImageUtils.getUploadObj().single('image'),(req,res,naxt)=>{
-	const imageData = fs.readFileSync(req.file.path);
-	const imageUrl = ImageUtils.adjustImageUrl(req.file.path);
-	const image = new Image({
-		type: req.file.mimetype,
-		data:imageData,
-		url:imageUrl
-	});
-	image.save()
-	.then((result)=>{
-		User.findById(req.body.userId).
-		then((user)=>{
-			user.profilePicture = result._id;
-			user.save();
-			res.status(201).json({
-				url:result.url
-			});
+router.post('/images',ImageUtils.getUploadObj().single('image'),async(req,res,naxt)=>{
+	const image = await saveImageFileInDB(file);
+	User.findById(req.body.userId).
+	then((user)=>{
+		user.profilePicture = result._id;
+		user.save();
+		res.status(201).json({
+			url:image.url
 		});
 	})
 	.catch(err =>{
 		res.sendStatus(500);
-	})
-});
+	});
+})
 
 router.get('/images',async (req,res,next) =>{
 	let image = await ImageUtils.getUserImage(req.query.userId);

@@ -38,6 +38,7 @@ async function getUserImage(userId){
     return userImage;
 }
 
+
 function adjustImageUrl(path){
    let splitedPath = path.toString().split('\\');
    if(path.length <= 1){
@@ -53,5 +54,16 @@ function adjustImageUrl(path){
    }
 }
 
+async function saveImageFileInDB(file){
+    const imageData = fs.readFileSync(file.path);
+	const imageUrl = adjustImageUrl(file.path);
+	const image = new Image({
+		type: file.mimetype,
+		data:imageData,
+		url:imageUrl
+    });
 
-module.exports={getUploadObj,getUserImage,adjustImageUrl};
+	return await image.save();
+}
+
+module.exports={getUploadObj,getUserImage,saveImageFileInDB};

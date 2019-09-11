@@ -55,17 +55,15 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 });
 
 router.get('/:nutritionistID/users', async (req,res,next) =>{
-	let clientsArr = new Array;
+	let clients = new Array;
 	if(req.params.nutritionistID){
 	let nutritionist = await User.findById(req.params.nutritionistID).exec();
 
 		 await Promise.all(nutritionist.clientsIDs.map(async clientID=>{
 			const result = await User.find({_id : clientID}).select('_id profilePicture gender firstName lastName email').exec()
-			let bool = false;
-			result.hasNewMessage = bool;
-			clientsArr.push({client : result, hasNewMessage: bool});
+			clients.push({client : result});
 	}));
-	res.status(200).json({clients : clientsArr});
+	res.status(200).json({clients});
 }
 	else{
 		res.status(400).json({message: "Enter nutritionist id to get info"})

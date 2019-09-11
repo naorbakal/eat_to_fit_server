@@ -11,7 +11,7 @@ router.get('/',async (req, res, next) => {
     const clientID = req.query.clientID;
     const offset = req.query.offset;
     const isNutritionist = req.query.isNutritionist;
-    const chatSize = 10;
+    const chatSize = 100;
     let messages;
     let chat;
     let receiverName;

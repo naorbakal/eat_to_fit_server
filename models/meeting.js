@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const MeetingSchema = new Schema({
     title: String,
     date: Date,
-    nutritionistID: Schema.Types.ObjectId,
-    clientID: Schema.Types.ObjectId,
+    firstParticipent: {type:Object,default:{userID:null,firstName:null,lastName:null}},
+    secondParticipent: {type:Object,default:{userID:null,firstName:null,lastName:null}},
     isAmeeting: Boolean
 });
 

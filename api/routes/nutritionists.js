@@ -27,7 +27,7 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 				});
 			}
 			else{
-			client.nutritionistID = nutritionist;
+			client.nutritionistID = nutritionist._id;
 			nutritionist.clientsIDs.push({clientID : client._id , hasNewMessage : false});
 			client.save()
 			.then(()=>{

@@ -121,12 +121,6 @@ router.get('/:nutritionistId/menus',async(req,res,next)=>{
 })
 
 //
-router.post('/:nutritionistID/meetings',async (req, res, next) => {
-	let meeting = await meetingUtils.saveMeeting(req.params.nutritionistID,req.body);
-	const response = await meetingUtils.setResponse(true,meeting);
-    res.status(201).json({
-		meeting:response	
-    });
-});
+
 
 module.exports = router;

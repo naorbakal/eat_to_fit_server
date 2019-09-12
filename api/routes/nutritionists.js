@@ -63,7 +63,7 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 		 await Promise.all(nutritionist.clientsIDs.map(async clientID=>{
 			const result = await User.findById(clientID.clientID).select('_id profilePicture gender firstName lastName email hasNewMessage').exec();
 			nutritionist.clientsIDs.forEach(nutClient => {
-				if(nutClient.clientID === clientID){
+				if(nutClient.clientID === clientID.clientID){
 					hasNewMessage = nutClient.hasNewMessage;
 				}
 			});

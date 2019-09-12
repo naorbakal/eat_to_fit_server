@@ -9,7 +9,7 @@ const menuUtils = require('../routes/commons/menuUtils');
 
 router.get('/:id/menus',async (req,res,next)=>{
     let user = await User.findById(req.params.id).exec();
-        let menuId = user.menusIDs[user.menusIDs.length - req.query.offset];
+        let menuId = user.menusIDs;
         let menu = await Menu.findById(menuId).exec();
         if(menu === null){
             res.sendStatus(404);
@@ -27,7 +27,7 @@ router.post('/:id/menus',async (req, res, next) => {
     const menu = await menuUtils.saveMenu(req.body);
     User.findById(req.params.id)
     .then(client=>{
-            client.menusIDs.push(menu._id);
+            client.menusIDs=menu._id;
             client.save(); 
             res.sendStatus(201);               
     });

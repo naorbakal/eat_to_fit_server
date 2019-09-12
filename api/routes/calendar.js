@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const express = require('express');
 const router = express.Router();
-const Calendar = require ('../../models/calendar');
+const Meeting = require ('../../models/meeting');
 const User = require('../../models/user');
 
 router.post('/',(req, res, next) => {
-    const calendar = new Calendar(req.body);
-    calendar.nutritionistID = req.query.id;
+    const meeting = new Meeting(req.body);
+    metting.nutritionistID = req.query.id;
     calendar.save().then(result => {
         res.status(201).json({
             messege : "Event added",

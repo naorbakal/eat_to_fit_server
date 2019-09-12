@@ -43,8 +43,6 @@ router.get('/',async (req, res, next) => {
             receiverName = client.firstName + " " + client.lastName;
         })
     }
-
-    
     let skip = (offset - 1)*chatSize;
     let limit = offset * chatSize;
 

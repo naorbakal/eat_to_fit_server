@@ -5,6 +5,7 @@ const router = express.Router();
 
 const User = require ('../../models/user');
 const Menu = require ('../../models/menu');
+const meetingUtils = require('./commons/meetingsUtils');
 
 // insert new User
 
@@ -118,5 +119,14 @@ router.get('/:nutritionistId/menus',async(req,res,next)=>{
 		res.status(200).json({menus});
 	}
 })
+
+//
+router.post('/:nutritionistID/meetings',async (req, res, next) => {
+	let meeting = await meetingUtils.saveMeeting(req.params.nutritionistID,req.body);
+	const response = await meetingUtils.setResponse(true,meeting);
+    res.status(201).json({
+		meeting:response	
+    });
+});
 
 module.exports = router;

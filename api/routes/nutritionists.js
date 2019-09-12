@@ -8,7 +8,7 @@ const Menu = require ('../../models/menu');
 
 // insert new User
 
-router.post('/:nutritionistID/users',async (req,res,next)=>{
+router.post('/:nutritionistID/users',async(req,res,next)=>{
 	//console.log(req.body);
 	const nutritionist = await User.findById(req.params.nutritionistID).exec();
 	//console.log(nutritionist);
@@ -20,7 +20,7 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 					message:'Client with the email' + req.body.clientEmail +' doesnt exist'
 				});
 			}
-			else if(client.nutritionistID === nutritionist_id){
+			else if(client.nutritionistID === nutritionist._id){
 				res.sendStatus(200);
 			}
 			else if(client.nutritionistID !== null || client.nutritionistID !==undefined ){

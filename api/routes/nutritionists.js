@@ -9,10 +9,7 @@ const Menu = require ('../../models/menu');
 // insert new User
 
 router.post('/:nutritionistID/users',async (req,res,next)=>{
-	console.log(req.body);
-	const nutritionist = await User.findById(req.params.nutritionistID).exec();
-	//console.log(nutritionist);
-	
+	const nutritionist = await User.findById(req.params.nutritionistID).exec();	
 	if(req.body.clientEmail){
 	User.findOne({email: req.body.clientEmail})
 	.then(client=>{

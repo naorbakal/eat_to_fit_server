@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     profilePicture: String,
     gender: {type:String, required: true},
     isNutritionist: {type:Boolean, required: true},
-    hasNewMessage: {type:Boolean, default:null},
+    hasNewMessage: {type:Boolean, default:false},
     //Client
     nutritionistID: {type:Schema.Types.ObjectId, default:null},
     allergies: {type:Array,default:[]},

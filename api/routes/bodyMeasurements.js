@@ -22,9 +22,9 @@ router.post('/',(req, res, next) => {
         });
 
 
-router.get('/',(req, res, next) => {
+router.get('/',async(req, res, next) => {
         //const bm = new BodyMeasurements();
-
+    //need to chane to offset + chage route
       const mesurment = await  BodyMeasurements.find({clientID: req.query.id}).sort({_id: -1}).limit(1).exec();
       if(mesurment){
         res.status(200).json(mesurment);

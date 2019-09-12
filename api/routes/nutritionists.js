@@ -8,13 +8,12 @@ const Menu = require ('../../models/menu');
 
 // insert new User
 
-router.post('/:nutritionistID/users',async(req,res,next)=>{
-	//console.log(req.body);
-	const nutritionist = await User.findById(req.params.nutritionistID).exec();
-	//console.log(nutritionist);
+router.post('/:nutritionistID/users',async (req,res,next)=>{
+	const nutritionist = await User.findById(req.params.nutritionistID).exec();	
 	if(req.body.clientEmail){
 	User.findOne({email: req.body.clientEmail})
 	.then(client=>{
+		console.log(client.nutritionistID);
 			if(client === null){
 				res.status(404).json({
 					message:'Client with the email' + req.body.clientEmail +' doesnt exist'
@@ -23,7 +22,7 @@ router.post('/:nutritionistID/users',async(req,res,next)=>{
 			else if(client.nutritionistID === nutritionist._id){
 				res.sendStatus(200);
 			}
-			else if(client.nutritionistID !== null || client.nutritionistID !==undefined ){
+			else if(client.nutritionistID !== null && client.nutritionistID !==undefined ){
 				res.status(400).json({
 					message:client.firstName+' ' + client.lastName +' is allready assigned to a different nutritionist'
 				});

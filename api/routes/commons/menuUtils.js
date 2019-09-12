@@ -10,7 +10,7 @@ async function createMenuJson(menu){
         const mealItems = await getMealItems(meal.mealItemsIds);
         return({
             title: meal.title,
-            mealItems:mealItems
+            mealItems
         })
     })
     const meals = await Promise.all(pArray);
@@ -84,9 +84,9 @@ async function getMealItems(mealItemsIds){
         })
     });
     const mealItems = await Promise.all(pArray);
-    return({
-        mealItems:mealItems
-    })
+    return(
+        mealItems
+    )
 }
 
 module.exports={createMenuJson,saveMenu};

@@ -6,27 +6,27 @@ const mongoose = require("mongoose");
 async function saveMeeting(userId,meetingJson){
     let participent = await User.findById(userId).exec();
     const meeting = new Meeting(meetingJson);
-    meeting.firstParticipent = {userID:participent._id,firstName:participent.firstName,lastName:participent.lastName};
+    meeting.participant1 = {userID:participent._id,firstName:participent.firstName,lastName:participent.lastName};
 	if(meetingJson.clientEmail){
         participent = await User.findOne({email:meetingJson.clientEmail}).exec();
-        meeting.secondParticipent = {userID:participent._id,firstName:participent.firstName,lastName:participent.lastName};
+        meeting.participant2 = {userID:participent._id,firstName:participent.firstName,lastName:participent.lastName};
     }   
     return await meeting.save()
 }
 
  function setResponse(meeting){
-    let secondParticipent=null;
+    let participant2=null;
 
-    if(meeting.secondParticipent){
-        secondParticipent=meeting.secondParticipent.firstName + ' ' + meeting.secondParticipent.lastName
+    if(meeting.participant2){
+        participant2=meeting.participant2.firstName + ' ' + meeting.participant2.lastName
     }
     
     let response = {
-        firstParticipent:meeting.firstParticipent.firstName +' ' +meeting.firstParticipent.lastName,
-        secondParticipent:secondParticipent,
+        participant1:meeting.participant1.firstName +' ' +meeting.participant1.lastName,
+        participant2:participant2,
         title: meeting.title,
         date:meeting.date,
-        isAmeeting:meeting.isAmeeting
+        isAMeeting:meeting.isAMeeting
     };
     return response;
 }
@@ -34,7 +34,7 @@ async function saveMeeting(userId,meetingJson){
 async function getUserMeetings(userId,year,month){
     let meetings = await Meeting.find({
        // $and:[
-            $or:[{"firstParticipent.userID":mongoose.Types.ObjectId(userId)},{"secondParticipent.userID":mongoose.Types.ObjectId(userId)}]
+            $or:[{"participant1.userID":mongoose.Types.ObjectId(userId)},{"participant2.userID":mongoose.Types.ObjectId(userId)}]
             //{date:{$gte:new Date(year,month,1), $lte:new Date(year,month,31)}}
     }).exec();
     return meetings;  

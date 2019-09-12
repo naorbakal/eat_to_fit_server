@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const MeetingSchema = new Schema({
     title: String,
     date: Date,
-    firstParticipent: {type:Object,default:{userID:null,firstName:null,lastName:null}},
-    secondParticipent: {type:Object,default:{userID:null,firstName:null,lastName:null}},
-    isAmeeting: Boolean
+    participant1: {type:Object,default:{userID:null,firstName:null,lastName:null}},
+    participant2: {type:Object,default:{userID:null,firstName:null,lastName:null}},
+    isAMeeting: Boolean
 });
 
 const calendar = mongoose.model('meetings', MeetingSchema);

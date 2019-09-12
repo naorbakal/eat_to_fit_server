@@ -6,37 +6,20 @@ const meetingUtils = require('./commons/meetingsUtils');
 
 router.post('/:userID',async (req, res, next) => {
     let meeting = await meetingUtils.saveMeeting(req.params.userID,req.body);
-    const user = await User.findById(req.params.userID);
-	const response = await meetingUtils.setResponse(user.isNutritionist,meeting);
+	const response = await meetingUtils.setResponse(meeting);
     res.status(201).json({
 		meeting:response	
     });
 });
 
-router.get('/', async (req, res, next) => {
-    var calendarMap = new Map();
-    let user = await User.findById(req.query.id).exec();
-    //console.log(user);
-    if(user.isNutritionist){
-        items = await Calendar.find({nutritionistID : user._id}).exec();
-    
-    }
-    else{
-        items = await Calendar.find({clientID : user._id}).exec();
-    }
-
-    res.status(200).json(items);
-
-    /*
-    items.forEach(element => {
-        calendarMap.set(element.date, 
-                        {name : element.name, isAmeeting : element.isAmeeting});
-        });
-        console.log(calendarMap);
-        res.status(200).json({
-        data : calendarMap
-        })
-    */
+router.get('/:userID', async (req, res, next) => {
+    let userMeetings= await meetingUtils.getUserMeetings(req.params.userID,req.body.year,req.body.month);
+    const meetingsResponse = userMeetings.map(meeting =>{
+         return meetingUtils.setResponse(meeting)
+    }); 
+     res.status(200).json({
+         meetings:meetingsResponse
+    })
 })
 
 module.exports = router;

@@ -1,35 +1,28 @@
 const Meeting = require ('../../../models/meeting');
 const User = require('../../../models/user');
+const mongoose = require("mongoose");
 
-async function saveMeeting(nutritionistID,meetingJson){
+
+async function saveMeeting(userId,meetingJson){
+    let participent = await User.findById(userId).exec();
     const meeting = new Meeting(meetingJson);
-	meeting.nutritionistID = nutritionistID;
+    meeting.firstParticipent = {userID:participent._id,firstName:participent.firstName,lastName:participent.lastName};
 	if(meetingJson.clientEmail){
-		meeting.clientID = await User.findOne({email:meetingJson.clientEmail}).exec();
+        participent = await User.findOne({email:meetingJson.clientEmail}).exec();
+        meeting.secondParticipent = {userID:participent._id,firstName:participent.firstName,lastName:participent.lastName};
     }   
     return await meeting.save()
 }
 
-async function setResponse(isNutritionist,meeting){
-    let user=null;
+ function setResponse(meeting){
     let secondParticipent=null;
-    if(isNutritionist){
-        if(meeting.clientID){
-            user = await User.findById(meeting.clientID).exec();
-        }
+
+    if(meeting.secondParticipent){
+        secondParticipent=meeting.secondParticipent.firstName + ' ' + meeting.secondParticipent.lastName
     }
-    else{
-        if(meeting.nutritionistID){
-            user = await User.findById(meeting.nutritionistID).exec();
-        }
-    }
-    if(user!==null){
-        secondParticipent={
-            firstName: user.firstName,
-            lastName: user.lastName,
-        }
-    }
+    
     let response = {
+        firstParticipent:meeting.firstParticipent.firstName +' ' +meeting.firstParticipent.lastName,
         secondParticipent:secondParticipent,
         title: meeting.title,
         date:meeting.date,
@@ -38,4 +31,16 @@ async function setResponse(isNutritionist,meeting){
     return response;
 }
 
-module.exports={setResponse,saveMeeting};
+async function getUserMeetings(userId,year,month){
+    console.log(userId);
+    let meetings = await Meeting.find({
+       // $and:[
+            $or:[{"firstParticipent.userID":mongoose.Types.ObjectId(userId)},{"secondParticipent.userID":mongoose.Types.ObjectId(userId)}]
+            //{date:{$gte:new Date(year,month,1), $lte:new Date(year,month,31)}}
+    }).exec();
+    console.log(meetings);
+
+    return meetings;  
+}
+
+module.exports={setResponse,saveMeeting,getUserMeetings};

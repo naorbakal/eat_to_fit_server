@@ -32,14 +32,11 @@ async function saveMeeting(userId,meetingJson){
 }
 
 async function getUserMeetings(userId,year,month){
-    console.log(userId);
     let meetings = await Meeting.find({
        // $and:[
             $or:[{"firstParticipent.userID":mongoose.Types.ObjectId(userId)},{"secondParticipent.userID":mongoose.Types.ObjectId(userId)}]
             //{date:{$gte:new Date(year,month,1), $lte:new Date(year,month,31)}}
     }).exec();
-    console.log(meetings);
-
     return meetings;  
 }
 

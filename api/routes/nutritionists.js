@@ -53,9 +53,9 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 		}
 	});	
 }
-	else { // error
-			//res.status(200).json(nutritionist.clientsIDs);		
-	  }
+	else { 
+		res.status(200).json(nutritionist.clientsIDs);		
+	}
 });
 
 router.get('/:nutritionistID/users', async (req,res,next) =>{

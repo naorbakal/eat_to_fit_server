@@ -5,11 +5,11 @@ const router = express.Router();
 //const auth = require ("./auth");
 
 const User = require ('../../models/user');
-const ImageUtils = require('./commons/imageUtils');
+const Auth = require ('../auth');
 // handles registration
-router.post('/',ImageUtils.getUploadObj().single('image'),async(req, res, next) => {
+router.post('/',(req, res, next) => {
 
-    User.findOne({email : req.body.email}, async (err,result) =>{
+    User.findOne({email : req.body.email}, (err,result) =>{
 
         if(err){
             //handle error
@@ -21,10 +21,6 @@ router.post('/',ImageUtils.getUploadObj().single('image'),async(req, res, next) 
         }
         else{
             let user = new User(req.body);
-            if(req.file !== undefined){
-                const image = await ImageUtils.saveImageFileInDB(req.file);
-                user.profilePicture = image.url;
-            }
             user
                 .save()
                 .then(result => {
@@ -39,8 +35,6 @@ router.post('/',ImageUtils.getUploadObj().single('image'),async(req, res, next) 
                         message: err.message
                     })
                 });
-
-
         }
     });
 });

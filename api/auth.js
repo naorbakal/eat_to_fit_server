@@ -14,7 +14,6 @@ function userAuthentication(req,res,next){
 }
 */
 
-//needs encription
 function emailPasswordValidation(req,res,next){
     User.findOne({email:req.body.email,password:req.body.password}).exec()
     .then((user) =>{

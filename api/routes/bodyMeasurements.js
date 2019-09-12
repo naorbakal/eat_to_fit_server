@@ -27,7 +27,7 @@ router.get('/',async(req, res, next) => {
     //need to chane to offset + chage route
       const mesurment = await  BodyMeasurements.find({clientID: req.query.id}).sort({_id: -1}).limit(1).exec();
       if(mesurment.length!==0){
-        res.status(200).json(mesurment);
+        res.status(200).json(mesurment[0]);
      }
      else{
          res.status(404).json(null);

@@ -13,7 +13,6 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 	if(req.body.clientEmail){
 	User.findOne({email: req.body.clientEmail})
 	.then(client=>{
-		console.log(client.nutritionistID);
 			if(client === null){
 				res.status(404).json({
 					message:'Client with the email' + req.body.clientEmail +' doesnt exist'
@@ -62,7 +61,7 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 	let nutritionist = await User.findById(req.params.nutritionistID).exec();
 
 		 await Promise.all(nutritionist.clientsIDs.map(async clientID=>{
-			const result = await User.findById(clientID).select('_id profilePicture gender firstName lastName email hasNewMessage').exec();
+			const result = await User.findById(clientID.clientID).select('_id profilePicture gender firstName lastName email hasNewMessage').exec();
 			nutritionist.clientsIDs.forEach(nutClient => {
 				if(nutClient.clientID === clientID){
 					hasNewMessage = nutClient.hasNewMessage;
@@ -87,20 +86,26 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 });
 
 router.get('/:nutritionistID/users/:clientID',async (req,res,next)=>{
-	const client = await User.findById(req.params.clientID).select('_id profilePicture gender firstName lastName email').exec();
-	if(client === null ){
-		res.status(404).json({
-			message: 'A user with the id: '+req.params.clientID+ ' doesnt exists'
-		});
+	try{
+		const client = await User.findById(req.params.clientID).select('_id nutritionistID profilePicture gender firstName lastName email').exec();
+		if(client === null ){
+			res.status(404).json({
+				message: 'A user with the id: '+req.params.clientID+ ' doesnt exists'
+			});
+		}
+		else if(client.nutritionistID===undefined || (req.params.nutritionistID !== client.nutritionistID.toString())){
+			res.status(403).json({
+				message:'The user with id: ' + req.params.clientID + ' is not a client of ' + req.params.nutritionistID
+			});
+		}
+		else{
+			res.status(200).json({client});
+		}
 	}
-	else if(client.nutritionistID===undefined || (req.params.nutritionistID !== client.nutritionistID.toString())){
-		res.status(403).json({
-			message:'The user with id: ' + req.params.clientID + ' is not a client of ' + req.params.nutritionistID
-		});
+	catch(e){
+		res.sendStatus(500);
 	}
-	else{
-		res.status(200).json({client});
-	}
+
 })
 
 //menus

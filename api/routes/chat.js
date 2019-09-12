@@ -37,8 +37,8 @@ router.get('/',async (req, res, next) => {
                     nut.hasNewMessage = false;
                 }
             })
+            nut.save();
         })
-        nut.save();
         User.findById(clientID).then(client => {
             receiverName = client.firstName + " " + client.lastName;
         })

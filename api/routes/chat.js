@@ -62,6 +62,7 @@ router.get('/',async (req, res, next) => {
 
 router.post('/',async (req, res, next) => {
     let msg = new Message(req.body);
+    msg.date = new Date();
     let user;
     msg.save().then(async result => {
         user = await User.findById(result.receiver).exec();

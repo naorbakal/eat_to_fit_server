@@ -24,7 +24,6 @@ router.get('/',async (req, res, next) => {
         User.findById(nutritionistID).then(nut => {
             receiverName = nut.firstName + " " + nut.lastName;
         })
-
     }
     else{
         User.findById(nutritionistID).then(async nut => {

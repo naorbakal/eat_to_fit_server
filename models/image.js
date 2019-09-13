@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 
 const ImageSchema = new Schema({
     type:String,
-    data:Buffer,
     url:String
 })
 

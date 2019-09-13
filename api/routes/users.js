@@ -31,7 +31,7 @@ router.get('/',(req,res,next) => {
         res.status(200).json(users);  
 	  });
 });
-
+/*
 router.post('/:id/images',ImageUtils.getUploadObj().single('image'),async(req,res,naxt)=>{
 	const image = await saveImageFileInDB(file);
 	User.findById(req.params.id).
@@ -46,12 +46,14 @@ router.post('/:id/images',ImageUtils.getUploadObj().single('image'),async(req,re
 		res.sendStatus(500);
 	});
 })
-
+*/
+/*
 router.get('/images',async (req,res,next) =>{
 	let image = await ImageUtils.getUserImage(req.query.userId);
 	res.status(200).json({
 		url:image.url
 	})
 });
+*/
 
 module.exports = router;

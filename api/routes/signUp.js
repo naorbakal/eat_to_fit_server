@@ -5,7 +5,7 @@ const router = express.Router();
 //const auth = require ("./auth");
 
 const User = require ('../../models/user');
-const Auth = require ('../auth');
+const ImageUtils = require('./commons/imageUtils');
 // handles registration
 router.post('/',(req, res, next) => {
 
@@ -21,6 +21,10 @@ router.post('/',(req, res, next) => {
         }
         else{
             let user = new User(req.body);
+            if(req.body.image){
+                const image =await ImageUtils.saveImage(req.body.image);
+                user.profilePicture=image.url;
+            }
             user
                 .save()
                 .then(result => {

@@ -5,7 +5,7 @@ const router = express.Router();
 
 const Post = require('../../models/post');
 
-
+/*
 router.post('/',ImageUtils.getUploadObj().single('image'),async(req,res,next)=>{
     let post = new Post({
         authorID: req.body.authorID,
@@ -22,6 +22,7 @@ router.post('/',ImageUtils.getUploadObj().single('image'),async(req,res,next)=>{
         res.sendStatus(201);
     })
 });
+*/
 
 router.get('/',async(req,res,next)=>{
     const pageSize=10;

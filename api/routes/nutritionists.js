@@ -11,9 +11,8 @@ const meetingUtils = require('./commons/meetingsUtils');
 
 router.post('/:nutritionistID/users',async (req,res,next)=>{
 	const nutritionist = await User.findById(req.params.nutritionistID).exec();	
-	console.log(req.body);
+
 	if(req.body.clientEmail){
-		console.log("in if");
 	User.findOne({email: req.body.clientEmail})
 	.then(client=>{
 		console.log(client);
@@ -54,8 +53,7 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 	});	
 }
 	else { 
-		console.log("in else");
-		res.status(200).json(nutritionist.clientsIDs);		
+		res.status(400).json({message : "problem with Client Email"});		
 	}
 });
 

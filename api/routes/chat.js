@@ -67,8 +67,10 @@ router.post('/',async (req, res, next) => {
                 }                
             });
         }
-        user.hasNewMessage = true;      
+        user.hasNewMessage = true;
+        console.log("here");      
         user.save().then(result => {
+            console.log("in", result);
             res.status(200).json({message : "message sent"});
         })
     })

@@ -6,6 +6,7 @@ const router = express.Router();
 const User = require ('../../models/user');
 const Menu = require ('../../models/menu');
 const Meal = require ('../../models/meal');
+const MealItem = require ('../../models/mealItem');
 const Product = require ('../../models/product');
 const menuUtils = require('../routes/commons/menuUtils');
 

@@ -11,6 +11,7 @@ const meetingUtils = require('./commons/meetingsUtils');
 
 router.post('/:nutritionistID/users',async (req,res,next)=>{
 	const nutritionist = await User.findById(req.params.nutritionistID).exec();	
+	console.log(req.body.clientEmail);
 	if(req.body.clientEmail){
 	User.findOne({email: req.body.clientEmail})
 	.then(client=>{

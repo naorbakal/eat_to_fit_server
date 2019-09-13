@@ -19,7 +19,7 @@ router.get('/',async (req, res, next) => {
     if(!isNutritionist){
         User.findById(clientID).then(client => {
             client.hasNewMessage = false;
-            client.save();
+            await client.save();
         })
         User.findById(nutritionistID).then(nut => {
             receiverName = nut.firstName + " " + nut.lastName;
@@ -30,14 +30,11 @@ router.get('/',async (req, res, next) => {
         User.findById(nutritionistID).then(nut => {
             nut.hasNewMessage = false;
             nut.clientsIDs.forEach(nutClient => {
-                if(nutClient.hasNewMessage === true && nutClient.clientID !== clientID){
+                if(nutClient.clientID !== clientID && nutClient.hasNewMessage === true ){
                     nut.hasNewMessage = true;
                 }
-                else if(nutClient.clientID === clientID){
-                    nut.hasNewMessage = false;
-                }
             })
-            nut.save();
+            await nut.save();
         })
         User.findById(clientID).then(client => {
             receiverName = client.firstName + " " + client.lastName;
@@ -66,9 +63,8 @@ router.post('/',async (req, res, next) => {
         user = await User.findById(result.receiver).exec();
         if(user.isNutritionist){
             user.clientsIDs.forEach(nutClient => {
-                if(nutClient === result.sender){
-                    nutClient.hasNewMessage = true;
-                    return;
+                if(nutClient.clientID === result.sender){
+                    nutClient.hasNewMessage = true;   
                 }                
             });
         }

@@ -5,6 +5,8 @@ const router = express.Router();
 
 const User = require ('../../models/user');
 const Menu = require ('../../models/menu');
+const Meal = require ('../../models/meal');
+const Product = require ('../../models/product');
 const menuUtils = require('../routes/commons/menuUtils');
 
 router.get('/:id/menus',async (req,res,next)=>{
@@ -25,6 +27,23 @@ router.get('/:id/menus',async (req,res,next)=>{
 
 router.post('/:id/menus',async (req, res, next) => {
     const menu = await menuUtils.saveMenu(req.body);
+    let meal;
+    let mealItem;
+    let product;
+    let calories = 0;
+
+
+    for (const mealId of menu.mealIds){
+        meal = await Meal.findById(mealId).exec();
+        for(const mealId of menu.mealItemsIds){
+            mealItem = await MealItem.findById(mealId).exec();
+            product = await Product.findById(mealItem.productId);
+            calories += (mealItem.quantity / product.unitType) * product.calories;
+        }
+    }
+    
+    console.log(calories);
+
     User.findById(req.params.id)
     .then(client=>{
             client.menusIDs=menu._id;

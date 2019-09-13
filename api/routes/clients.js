@@ -33,7 +33,7 @@ router.post('/:id/menus',async (req, res, next) => {
     let calories = 0;
 
 
-    for (const mealId of menu.mealIds){
+    for (const mealId of menu.mealsIds){
         meal = await Meal.findById(mealId).exec();
         for(const mealId of menu.mealItemsIds){
             mealItem = await MealItem.findById(mealId).exec();

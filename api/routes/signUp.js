@@ -7,9 +7,9 @@ const router = express.Router();
 const User = require ('../../models/user');
 const ImageUtils = require('./commons/imageUtils');
 // handles registration
-router.post('/',(req, res, next) => {
+router.post('/', async (req, res, next) => {
 
-    User.findOne({email : req.body.email}, (err,result) =>{
+    User.findOne({email : req.body.email}, async (err,result) =>{
 
         if(err){
             //handle error

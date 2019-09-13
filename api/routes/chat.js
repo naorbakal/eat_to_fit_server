@@ -17,7 +17,7 @@ router.get('/',async (req, res, next) => {
     let receiverName;
 
     if(!isNutritionist){
-        User.findById(clientID).then(client => {
+        User.findById(clientID).then( async client => {
             client.hasNewMessage = false;
             await client.save();
         })
@@ -27,7 +27,7 @@ router.get('/',async (req, res, next) => {
 
     }
     else{
-        User.findById(nutritionistID).then(nut => {
+        User.findById(nutritionistID).then(async nut => {
             nut.hasNewMessage = false;
             nut.clientsIDs.forEach(nutClient => {
                 if(nutClient.clientID !== clientID && nutClient.hasNewMessage === true ){

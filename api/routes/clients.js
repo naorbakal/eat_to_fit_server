@@ -35,7 +35,7 @@ router.post('/:id/menus',async (req, res, next) => {
 
     for (const mealId of menu.mealsIds){
         meal = await Meal.findById(mealId).exec();
-        for(const mealId of menu.mealItemsIds){
+        for(const mealId of meal.mealItemsIds){
             mealItem = await MealItem.findById(mealId).exec();
             product = await Product.findById(mealItem.productId);
             calories += (mealItem.quantity / product.unitType) * product.calories;

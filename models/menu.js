@@ -6,7 +6,8 @@ const MenuSchema = new Schema({
     author:Schema.Types.ObjectId,
     name: String,
     mealsIds: Array,
-    Date: Date
+    Date: Date,
+    Calories: Number
 });
 
 module.exports = mongoose.model('Menu', MenuSchema);

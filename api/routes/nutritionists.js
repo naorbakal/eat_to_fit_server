@@ -14,7 +14,8 @@ router.post('/:nutritionistID/users',async (req,res,next)=>{
 	if(req.body.clientEmail){
 	User.findOne({email: req.body.clientEmail})
 	.then(client=>{
-			if(client === null){
+		console.log(client);
+			if(client === null || client === undefined){
 				res.status(404).json({
 					message:'Client with the email' + req.body.clientEmail +' doesnt exist'
 				});

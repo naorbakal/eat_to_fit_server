@@ -25,7 +25,6 @@ const calendarRoute = require("./api/routes/meetings");
 const postsRoute = require ("./api/routes/posts");
 const chatRoute = require("./api/routes/chat");
 const meetingsRoute = require("./api/routes/meetings");
-const imageRoute = require('./api/routes/image');
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
@@ -65,7 +64,6 @@ app.use('/posts',postsRoute);
 app.use('/chat',chatRoute);
 app.use('/clients',clientsRoute);
 app.use('/meetings',meetingsRoute);
-app.use('/images',imageRoute);
 
 
 module.exports = app;

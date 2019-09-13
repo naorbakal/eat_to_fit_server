@@ -37,14 +37,12 @@ router.get('/',async (req, res, next) => {
                     nut.hasNewMessage = false;
                 }
             })
+            nut.save();
         })
-        nut.save();
         User.findById(clientID).then(client => {
             receiverName = client.firstName + " " + client.lastName;
         })
     }
-
-    
     let skip = (offset - 1)*chatSize;
     let limit = offset * chatSize;
 

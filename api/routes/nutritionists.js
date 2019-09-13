@@ -5,6 +5,7 @@ const router = express.Router();
 
 const User = require ('../../models/user');
 const Menu = require ('../../models/menu');
+const meetingUtils = require('./commons/meetingsUtils');
 
 // insert new User
 
@@ -118,5 +119,8 @@ router.get('/:nutritionistId/menus',async(req,res,next)=>{
 		res.status(200).json({menus});
 	}
 })
+
+//
+
 
 module.exports = router;

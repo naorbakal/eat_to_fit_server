@@ -32,7 +32,7 @@ const UserSchema = new Schema({
     
     clientsIDs: {type:Array,default:[]},
     PostsIDs: {type:[Schema.Types.ObjectId],default:[]},
-    menusIDs: {type:[Schema.Types.ObjectId],default:[]}
+    menusIDs: {type:Schema.Types.ObjectId,default:null}
 });
 
 module.exports = mongoose.model('Users', UserSchema);

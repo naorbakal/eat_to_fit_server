@@ -21,9 +21,10 @@ const productsRoute = require("./api/routes/products");
 const menusRoute = require ("./api/routes/menus");
 const nutritionistsRoute = require("./api/routes/nutritionists");
 const clientsRoute = require("./api/routes/clients");
-const calendarRoute = require("./api/routes/calendar");
+const calendarRoute = require("./api/routes/meetings");
 const postsRoute = require ("./api/routes/posts");
 const chatRoute = require("./api/routes/chat");
+const meetingsRoute = require("./api/routes/meetings")
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
@@ -62,6 +63,7 @@ app.use('/images', express.static(__dirname + '/images'));
 app.use('/posts',postsRoute);
 app.use('/chat',chatRoute);
 app.use('/clients',clientsRoute);
+app.use('/meetings',meetingsRoute);
 
 
 module.exports = app;

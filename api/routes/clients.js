@@ -31,7 +31,6 @@ router.get('/:id/menus',async (req,res,next)=>{
 });
 
 router.post('/:id/menus',async (req, res, next) => {
-    console.log(req.body);
     const menu = await menuUtils.saveMenuFromJson(req.body);
     
     User.findById(req.params.id)
@@ -43,7 +42,6 @@ router.post('/:id/menus',async (req, res, next) => {
 });
 
 router.post('/:id/report', async (req,res,next)=>{
-    try{
         const user = await User.findById(req.params.id).exec();
         let replicaMenu = await Menu.findOne({
             replicaOf:user.menusIDs,
@@ -59,7 +57,6 @@ router.post('/:id/report', async (req,res,next)=>{
             replicaMenu.date = new Date();
         }
         else{
-            console.log((replicaMenu._id));
             await Menu.findByIdAndRemove(replicaMenu._id).exec();
             replicaMenu = await menuUtils.saveMenuFromJson(req.body);
             replicaMenu.replicaOf = user.menusIDs;
@@ -67,12 +64,6 @@ router.post('/:id/report', async (req,res,next)=>{
         replicaMenu = await replicaMenu.save();
         const response = await menuUtils.createMenuJson(replicaMenu);
         res.status(201).json(response);
-    }
-    catch(err){
-        res.status(500).json({
-            message:err
-        });
-    }
 })
 
 module.exports = router;

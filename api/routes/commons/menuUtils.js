@@ -34,6 +34,7 @@ async function saveMenuFromJson(jsonMenu){
 }
 
 async function getNutritionalValues(menu){
+    console.log(menu)
     let amountItem;
     let meal;
     let mealItem;
@@ -46,7 +47,9 @@ async function getNutritionalValues(menu){
     for (const mealId of menu.mealsIds){
         meal = await Meal.findById(mealId).exec();
         for(const mealId of meal.mealItemsIds){
+            console.log(mealId);
             mealItem = await MealItem.findById(mealId).exec();
+            console.log(mealItem);
             product = await Product.findById(mealItem.productId);
             amountItem = (mealItem.quantity / product.unitQuantity);
             

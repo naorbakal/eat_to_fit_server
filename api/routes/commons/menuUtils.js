@@ -128,4 +128,9 @@ async function getMealItems(mealItemsIds){
     )
 }
 
+function deppCopy(menu){
+    return({
+
+    })
+}
 module.exports={createMenuJson,saveMenuFromJson};

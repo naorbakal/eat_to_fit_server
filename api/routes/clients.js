@@ -43,6 +43,7 @@ router.post('/:id/menus',async (req, res, next) => {
 
 router.post('/:id/report', async (req,res,next)=>{
         const user = await User.findById(req.params.id).exec();
+        console.log(user.menusIDs);
         let replicaMenu = await Menu.findOne({
             replicaOf:user.menusIDs,
             date:{ 
@@ -51,6 +52,7 @@ router.post('/:id/report', async (req,res,next)=>{
               }  
             });
         if(!replicaMenu){
+            console.log(user.menusIDs);
             const userMenu = await Menu.findById(user.menusIDs);
             replicaMenu= userMenu;
             replicaMenu.replicaOf = userMenu._id;

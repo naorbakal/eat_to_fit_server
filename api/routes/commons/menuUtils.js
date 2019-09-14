@@ -2,6 +2,8 @@ const Menu = require ('../../../models/menu');
 const Meal = require ('../../../models/meal');
 const MealItem = require('../../../models/mealItem');
 const Product = require ('../../../models/product');
+const mongoose = require("mongoose");
+
 
 async function createMenuJson(menu){
     const name = menu.name;
@@ -49,9 +51,7 @@ async function getNutritionalValues(menu){
     for (const mealId of menu.mealsIds){
         meal = await Meal.findById(mealId).exec();
         for(const mealId of meal.mealItemsIds){
-            console.log(mealId);
             mealItem = await MealItem.findById(mealId).exec();
-            console.log(mealItem);
             product = await Product.findById(mealItem.productId);
             amountItem = (mealItem.quantity / product.unitQuantity);
             
@@ -95,9 +95,9 @@ async function createMeal(meal){
 }
 
 async function createMealItem(item){
-    let mealItem =await Product.findOne({quantity:item.quantity, productId:item.product._id,status:item.status}).exec();
-    console.log(mealItem);
+    let mealItem =await MealItem.findOne({quantity:item.quantity, productId:mongoose.Types.ObjectId(item.product._id),status:item.status}).exec();
     if(!mealItem){
+        console.log("innn")
        const product = await Product.findById(item.product._id).exec();
         mealItem = new MealItem({ 
            quantity:item.quantity,
@@ -106,11 +106,13 @@ async function createMealItem(item){
        })
        mealItem = await mealItem.save();
     }
+    console.log(mealItem);
     return mealItem._id
 }
 
 async function getMealItems(mealItemsIds){
     const pArray = mealItemsIds.map(async mealItemId =>{
+        console.log(mealItemId);
         const mealItem = await MealItem.findById(mealItemId).exec();
         const quantity=mealItem.quantity;
         const product = await Product.findById(mealItem.productId).exec();

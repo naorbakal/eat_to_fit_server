@@ -40,7 +40,7 @@ async function getNutritionalValues(menu){
     let product;
     let calories = 0;
     let protein = 0;
-    let crabs = 0;
+    let carbs = 0;
     let fat = 0;
 
     for (const mealId of menu.mealsIds){
@@ -52,14 +52,14 @@ async function getNutritionalValues(menu){
             
             calories +=amountItem * product.calories;
             protein += amountItem * product.protein;
-            crabs += amountItem * product.crabs;
+            carbs += amountItem * product.carbs;
             fat += amountItem * product.fat;
         }
     }
 
     menu.calories = calories;
     menu.protein = protein;
-    menu.crabs = crabs;
+    menu.carbs = carbs;
     menu.fat = fat;
 
     return menu;

@@ -12,4 +12,17 @@ router.get('/:id',async (req,res,next)=>{
     res.status(200).json({menu});
 })
 
+router.get('/:id/nutritionalValues', async (req,res,next) => {
+    const user = await User.findById(req.params.id).exec(); 
+
+    const menu = await Menu.findById(user.menusIDs).exec();
+
+    res.status(200).json({
+        calories : menu.calories,
+        protein : menu.protein,
+        carbs : menu.carbs,
+        fat : menu.fat
+    })
+})
+
 module.exports = router;

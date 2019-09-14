@@ -31,7 +31,7 @@ router.get('/:id/menus',async (req,res,next)=>{
 });
 
 router.post('/:id/menus',async (req, res, next) => {
-    const menu = await menuUtils.saveMenuFromJson(req.body);
+    const menu = await menuUtils.saveMenuFromJson(req.body,true);
     
     User.findById(req.params.id)
     .then(client=>{
@@ -58,7 +58,7 @@ router.post('/:id/report', async (req,res,next)=>{
         }
         else{
             await Menu.findByIdAndRemove(replicaMenu._id).exec();
-            replicaMenu = await menuUtils.saveMenuFromJson(req.body);
+            replicaMenu = await menuUtils.saveMenuFromJson(req.body,false);
             replicaMenu.replicaOf = user.menusIDs;
         }
         replicaMenu = await replicaMenu.save();

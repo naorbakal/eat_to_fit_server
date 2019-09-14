@@ -20,7 +20,7 @@ async function createMenuJson(menu){
     }
 }
 
-async function saveMenuFromJson(jsonMenu){
+async function saveMenuFromJson(jsonMenu,getNutValues){
     const mealsIds =  await saveMeals(jsonMenu.meals);
     let menu = new Menu({
         author:jsonMenu.author,
@@ -28,7 +28,9 @@ async function saveMenuFromJson(jsonMenu){
         mealsIds:mealsIds,
         date: new Date()
     });
-    menu = await getNutritionalValues(menu);
+    if(getNutValues){
+       // menu = await getNutritionalValues(menu);
+    }
     const res = await menu.save();
     return res;
 }
@@ -93,7 +95,8 @@ async function createMeal(meal){
 }
 
 async function createMealItem(item){
-    let mealItem =await Product.findOne({quantity:item.quantity, productId:item.productId}).exec();
+    let mealItem =await Product.findOne({quantity:item.quantity, productId:item.product._id,status:item.status}).exec();
+    console.log(mealItem);
     if(!mealItem){
        const product = await Product.findById(item.product._id).exec();
         mealItem = new MealItem({ 
@@ -113,7 +116,7 @@ async function getMealItems(mealItemsIds){
         const product = await Product.findById(mealItem.productId).exec();
         return({
             quantity:quantity,
-            product:{_id:product._id,name:product.name,unitType:product.unitType},
+            product:product?{_id:product._id,name:product.name,unitType:product.unitType}:null,
             status:mealItem.status
         })
     });

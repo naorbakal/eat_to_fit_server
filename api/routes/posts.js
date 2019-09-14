@@ -15,6 +15,7 @@ router.post('/',async(req,res,next)=>{
         });
         if(req.body.imageUrl){
             const image =await ImageUtils.saveImage(req.body.imageUrl);
+            console.log(image.url);
             post.imageUrl=image.url;
         }
         post.save()

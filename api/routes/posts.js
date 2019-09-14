@@ -31,19 +31,20 @@ router.get('/',async(req,res,next)=>{
     let posts = new Array();
     try{
         let postsfromDb = await Post.find({authorID:nutId}).sort({creationDate:-1}).limit(offset*pageSize).exec();
+        const to = offset*pageSize < postsfromDb.length ? offset*pageSize:postsfromDb.length;
+        for (let i=from;i<to;i++){
+            posts.push(postsfromDb[i]);
+        }  
+        res.status(200).json({
+             posts
+        });  
     }
     catch(err){
         res.status(500).json({
             message:err
         });
     }
-    const to = offset*pageSize < postsfromDb.length ? offset*pageSize:postsfromDb.length;
-    for (let i=from;i<to;i++){
-        posts.push(postsfromDb[i]);
-    }  
-    res.status(200).json({
-         posts
-    });  
+
 })
 
 router.delete('/:id', async (req,res,next) => {

@@ -22,13 +22,47 @@ async function createMenuJson(menu){
 
 async function saveMenu(jsonMenu){
     const mealsIds =  await saveMeals(jsonMenu.meals);
-    const menu = new Menu({
+    let menu = new Menu({
         author:jsonMenu.author,
         name:jsonMenu.name,
-        mealsIds:mealsIds
+        mealsIds:mealsIds,
+        date: new Date()
     });
+    menu = await getNutritionalValues(menu);
     const res = await menu.save();
     return res;
+}
+
+async function getNutritionalValues(menu){
+    let amountItem;
+    let meal;
+    let mealItem;
+    let product;
+    let calories = 0;
+    let protein = 0;
+    let crabs = 0;
+    let fat = 0;
+
+    for (const mealId of menu.mealsIds){
+        meal = await Meal.findById(mealId).exec();
+        for(const mealId of meal.mealItemsIds){
+            mealItem = await MealItem.findById(mealId).exec();
+            product = await Product.findById(mealItem.productId);
+            amountItem = (mealItem.quantity / product.unitQuantity);
+            
+            calories +=amountItem * product.calories;
+            protein += amountItem * product.protein;
+            crabs += amountItem * product.crabs;
+            fat += amountItem * product.fat;
+        }
+    }
+
+    menu.calories = calories;
+    menu.protein = protein;
+    menu.crabs = crabs;
+    menu.fat = fat;
+
+    return menu;
 }
 
 async function saveMeals(mealsRequestObj){

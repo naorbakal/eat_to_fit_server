@@ -27,24 +27,9 @@ router.get('/:id/menus',async (req,res,next)=>{
 });
 
 router.post('/:id/menus',async (req, res, next) => {
+    console.log(req.body);
     const menu = await menuUtils.saveMenu(req.body);
-    let meal;
-    let mealItem;
-    let product;
-    let calories = 0;
-
-
-    for (const mealId of menu.mealsIds){
-        meal = await Meal.findById(mealId).exec();
-        for(const mealId of meal.mealItemsIds){
-            mealItem = await MealItem.findById(mealId).exec();
-            product = await Product.findById(mealItem.productId);
-            calories += (mealItem.quantity / product.unitType) * product.calories;
-        }
-    }
     
-    console.log(calories);
-
     User.findById(req.params.id)
     .then(client=>{
             client.menusIDs=menu._id;

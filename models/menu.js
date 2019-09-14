@@ -6,8 +6,11 @@ const MenuSchema = new Schema({
     author:Schema.Types.ObjectId,
     name: String,
     mealsIds: Array,
-    Date: Date,
-    Calories: Number
+    date: Date,
+    calories: Number, 
+    protein: Number,
+    carbs: Number,
+    fat: Number
 });
 
 module.exports = mongoose.model('Menu', MenuSchema);

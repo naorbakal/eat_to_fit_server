@@ -32,6 +32,18 @@ router.get('/',(req,res,next) => {
 	  });
 });
 
+router.get('/:id/newMessage',async (req,res,next) => {
+	let nutritionistID = null;
+	const user = await User.findById(req.params.id).exec();
+	
+	if(!user.isNutritionist){
+		nutritionistID = user.nutritionistID;
+	}
+
+	res.status(200).json({newMessage : user.hasNewMessage, nutritionistID: nutritionistID});
+})
+
+
 router.post('/:id/images',ImageUtils.getUploadObj().single('image'),async(req,res,naxt)=>{
 	const image = await saveImageFileInDB(file);
 	User.findById(req.params.id).

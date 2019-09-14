@@ -40,15 +40,15 @@ router.get('/',async(req,res,next)=>{
         const to = offset*pageSize < postsfromDb.length ? offset*pageSize:postsfromDb.length;
         for (let i=from;i<to;i++){
             posts.push(postsfromDb[i]);
-    }  
+        }  
         res.status(200).json({
             posts
         });
-        }
-        catch(err){
-            res.status(500).json({
-                message:err
-            });
+    }
+    catch(err){
+        res.status(500).json({
+            message:err
+        });
     }  
 })
 

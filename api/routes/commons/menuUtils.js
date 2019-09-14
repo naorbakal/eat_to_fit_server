@@ -89,4 +89,16 @@ async function getMealItems(mealItemsIds){
     )
 }
 
+function setResponse(posts){
+    const res = posts.map(post=>{
+        return({
+            authorID:posts.authorID, //nutritionist
+            headline: posts.headline,
+            content: post.content,
+            imageUrl: String,
+            creationDate: Date
+        })
+    })
+}
+
 module.exports={createMenuJson,saveMenu};

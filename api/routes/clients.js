@@ -8,7 +8,8 @@ const Menu = require ('../../models/menu');
 const menuUtils = require('../routes/commons/menuUtils');
 
 router.get('/:id/menus',async (req,res,next)=>{
-    let user = await User.findById(req.params.id).exec();
+    try{
+        let user = await User.findById(req.params.id).exec();
         let menuId = user.menusIDs;
         let menu = await Menu.findById(menuId).exec();
         if(menu === null){
@@ -21,6 +22,13 @@ router.get('/:id/menus',async (req,res,next)=>{
                 meals:menu.meals
             });
         }
+    }
+    catch(err){
+        res.status(500).json({
+            message:err
+        });
+    }
+
 });
 
 router.post('/:id/menus',async (req, res, next) => {

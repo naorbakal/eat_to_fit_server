@@ -24,7 +24,7 @@ const clientsRoute = require("./api/routes/clients");
 const calendarRoute = require("./api/routes/meetings");
 const postsRoute = require ("./api/routes/posts");
 const chatRoute = require("./api/routes/chat");
-const meetingsRoute = require("./api/routes/meetings")
+const meetingsRoute = require("./api/routes/meetings");
 
 mongoose.connect('mongodb+srv://admin:'+
 //process.env.MONGO_ATLAS_PW+
@@ -37,7 +37,7 @@ mongoose.connect('mongodb+srv://admin:'+
      console.log(err);
  });
 
- app.use(bodyParser.json());
+ app.use(bodyParser.json({limit: "50mb"}));
  app.use(boolParser());
 
  app.use(session({

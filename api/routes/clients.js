@@ -14,14 +14,25 @@ router.get('/:id/menus',async (req,res,next)=>{
     try{
         let user = await User.findById(req.params.id).exec();
         let menuId = user.menusIDs;
-        let menu = await Menu.findById(menuId).exec();
-        console.log(menuId)
-        if(menu === null){
-            res.sendStatus(404);
+        let replicaMenu = await Menu.findOne({
+            replicaOf:user.menusIDs,
+            date:{ 
+                $lt: new Date(), 
+                $gte: new Date().setHours(00,00,00) 
+              }  
+            });
+        if(replicaMenu){
+            res.status(200).json(await menuUtils.createMenuJson(replicaMenu));  
         }
         else{
-            menu = await menuUtils.createMenuJson(menu);
-            res.status(200).json(menu);
+            let menu = await Menu.findById(menuId).exec();
+            if(menu === null){
+                res.sendStatus(404);
+            }
+            else{
+                menu = await menuUtils.createMenuJson(menu);
+                res.status(200).json(menu);
+            }
         }
     }
     catch(err){

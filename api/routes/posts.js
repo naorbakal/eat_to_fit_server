@@ -5,22 +5,28 @@ const router = express.Router();
 
 const Post = require('../../models/post');
 
-
 router.post('/',async(req,res,next)=>{
-    let post = new Post({
-        authorID: req.body.authorID,
-        headline: req.body.headline,
-        content:  req.body.content,
-        creationDate: new Date()
-    });
-    if(req.body.image){
-        const image =await ImageUtils.saveImage(req.body.image);
-        post.imageUrl=image.url;
+    try{
+        let post = new Post({
+            authorID: req.body.authorID,
+            headline: req.body.headline,
+            content:  req.body.content,
+            creationDate: new Date()
+        });
+        if(req.body.image){
+            const image =await ImageUtils.saveImage(req.body.imageUrl);
+                post.imageUrl=image.url;
+        }
+        post.save()
+        .then((result)=>{
+            res.sendStatus(201);
+        })
     }
-    post.save()
-    .then((result)=>{
-        res.sendStatus(201);
-    })
+    catch(err){
+        res.status(500).json({
+            message:err
+        });
+    }
 });
 
 router.get('/',async(req,res,next)=>{
@@ -36,25 +42,14 @@ router.get('/',async(req,res,next)=>{
             posts.push(postsfromDb[i]);
         }  
         res.status(200).json({
-             posts
-        });  
+            posts
+        });
     }
     catch(err){
         res.status(500).json({
             message:err
         });
-    }
-
-})
-
-router.delete('/:id', async (req,res,next) => {
-    Post.remove({_id : req.params.id}).exec().then(result => {
-        res.status(200).json({message: "post deleted"});
-    }).catch(err => {
-        res.status(500).json({
-            error : err
-        })
-    })
+    }  
 })
 
 module.exports = router;

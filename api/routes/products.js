@@ -24,24 +24,30 @@ router.post('/',(req, res, next) => {
 });
 
 router.get('/',(req,res,next) => {
-    
-    Product.find({}, function(err, products) {
-        //var productMap = {};
-    
-        //products.forEach(function(product) {
-          //productMap[product._id] = product;
-        //});
-    
-        res.status(200).json({data : products});  
-      });
-    
-    /*
-    Product.find().distinct('_id', function(error, names) {
-        res.status(201).json({
-            names : names
-        })
-    });
-    */
+    try{
+        Product.find({}, function(err, products) {
+            //var productMap = {};
+        
+            //products.forEach(function(product) {
+              //productMap[product._id] = product;
+            //});
+        
+            res.status(200).json({data : products});  
+          });
+        
+        /*
+        Product.find().distinct('_id', function(error, names) {
+            res.status(201).json({
+                names : names
+            })
+        });
+        */
+    }
+    catch(err){
+        res.status(500).json({
+            message:err
+        });
+    }
 })
 
 

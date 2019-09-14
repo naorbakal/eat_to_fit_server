@@ -2,6 +2,8 @@ const Menu = require ('../../../models/menu');
 const Meal = require ('../../../models/meal');
 const MealItem = require('../../../models/mealItem');
 const Product = require ('../../../models/product');
+const mongoose = require("mongoose");
+
 
 async function createMenuJson(menu){
     const name = menu.name;
@@ -20,7 +22,7 @@ async function createMenuJson(menu){
     }
 }
 
-async function saveMenu(jsonMenu){
+async function saveMenuFromJson(jsonMenu,getNutValues){
     const mealsIds =  await saveMeals(jsonMenu.meals);
     let menu = new Menu({
         author:jsonMenu.author,
@@ -28,12 +30,15 @@ async function saveMenu(jsonMenu){
         mealsIds:mealsIds,
         date: new Date()
     });
-    menu = await getNutritionalValues(menu);
+    if(getNutValues){
+       // menu = await getNutritionalValues(menu);
+    }
     const res = await menu.save();
     return res;
 }
 
 async function getNutritionalValues(menu){
+    console.log(menu)
     let amountItem;
     let meal;
     let mealItem;
@@ -90,31 +95,31 @@ async function createMeal(meal){
 }
 
 async function createMealItem(item){
-        
-    let mealItem =await Product.findOne({quantity:item.quantity, productId:item.productId}).exec();
+    let mealItem =await MealItem.findOne({quantity:item.quantity, productId:mongoose.Types.ObjectId(item.product._id),status:item.status}).exec();
     if(!mealItem){
+        console.log("innn")
        const product = await Product.findById(item.product._id).exec();
         mealItem = new MealItem({ 
            quantity:item.quantity,
-           productId:product._id
+           productId:product?product._id:null,
+           status:item.status
        })
        mealItem = await mealItem.save();
-       return mealItem._id;
     }
-    else{
-        return mealItem._id
-    }
-
+    console.log(mealItem);
+    return mealItem._id
 }
 
 async function getMealItems(mealItemsIds){
     const pArray = mealItemsIds.map(async mealItemId =>{
+        console.log(mealItemId);
         const mealItem = await MealItem.findById(mealItemId).exec();
         const quantity=mealItem.quantity;
         const product = await Product.findById(mealItem.productId).exec();
         return({
             quantity:quantity,
-            product:{_id:product._id,name:product.name,unitType:product.unitType}
+            product:product?{_id:product._id,name:product.name,unitType:product.unitType}:null,
+            status:mealItem.status
         })
     });
     const mealItems = await Promise.all(pArray);
@@ -123,16 +128,9 @@ async function getMealItems(mealItemsIds){
     )
 }
 
-function setResponse(posts){
-    const res = posts.map(post=>{
-        return({
-            authorID:posts.authorID, //nutritionist
-            headline: posts.headline,
-            content: post.content,
-            imageUrl: String,
-            creationDate: Date
-        })
+function deppCopy(menu){
+    return({
+
     })
 }
-
-module.exports={createMenuJson,saveMenu};
+module.exports={createMenuJson,saveMenuFromJson};

@@ -7,9 +7,16 @@ const User=require('../../models/user');
 const Menu = require ('../../models/menu');
 
 router.get('/:id',async (req,res,next)=>{
-    let menu =await Menu.findById(req.params.id).exec();
-    menu = await menuUtils.createMenuJson(menu);
-    res.status(200).json({menu});
+    try{
+        let menu =await Menu.findById(req.params.id).exec();
+        menu = await menuUtils.createMenuJson(menu);
+        res.status(200).json({menu});
+    }
+    catch(err){
+        res.status(500).json({
+            message:err
+        });
+    }
 })
 
 router.get('/:id/nutritionalValues', async (req,res,next) => {

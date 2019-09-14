@@ -6,6 +6,7 @@ const MenuSchema = new Schema({
     author:Schema.Types.ObjectId,
     name: String,
     mealsIds: Array,
+    replicaOf:{type:Schema.Types.ObjectId,default:null},
     date: Date,
     calories: Number, 
     protein: Number,

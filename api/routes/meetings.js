@@ -5,11 +5,18 @@ const User = require('../../models/user');
 const meetingUtils = require('./commons/meetingsUtils');
 
 router.post('/:userID',async (req, res, next) => {
-    let meeting = await meetingUtils.saveMeeting(req.params.userID,req.body);
-	const response = await meetingUtils.setResponse(meeting);
-    res.status(201).json({
-		meeting:response	
-    });
+    try{
+        let meeting = await meetingUtils.saveMeeting(req.params.userID,req.body);
+        const response = await meetingUtils.setResponse(meeting);
+        res.status(201).json({
+            meeting:response	
+        });
+    }
+    catch(err){
+        res.status(500).json({
+            message:err
+        });
+    }
 });
 
 router.get('/:userID', async (req, res, next) => {

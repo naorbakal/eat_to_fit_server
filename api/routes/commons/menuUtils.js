@@ -20,7 +20,7 @@ async function createMenuJson(menu){
     }
 }
 
-async function saveMenu(jsonMenu){
+async function saveMenuFromJson(jsonMenu){
     const mealsIds =  await saveMeals(jsonMenu.meals);
     let menu = new Menu({
         author:jsonMenu.author,
@@ -90,21 +90,17 @@ async function createMeal(meal){
 }
 
 async function createMealItem(item){
-        
     let mealItem =await Product.findOne({quantity:item.quantity, productId:item.productId}).exec();
     if(!mealItem){
        const product = await Product.findById(item.product._id).exec();
         mealItem = new MealItem({ 
            quantity:item.quantity,
-           productId:product._id
+           productId:product?product._id:null,
+           status:item.status
        })
        mealItem = await mealItem.save();
-       return mealItem._id;
     }
-    else{
-        return mealItem._id
-    }
-
+    return mealItem._id
 }
 
 async function getMealItems(mealItemsIds){
@@ -114,7 +110,8 @@ async function getMealItems(mealItemsIds){
         const product = await Product.findById(mealItem.productId).exec();
         return({
             quantity:quantity,
-            product:{_id:product._id,name:product.name,unitType:product.unitType}
+            product:{_id:product._id,name:product.name,unitType:product.unitType},
+            status:mealItem.status
         })
     });
     const mealItems = await Promise.all(pArray);
@@ -123,16 +120,4 @@ async function getMealItems(mealItemsIds){
     )
 }
 
-function setResponse(posts){
-    const res = posts.map(post=>{
-        return({
-            authorID:posts.authorID, //nutritionist
-            headline: posts.headline,
-            content: post.content,
-            imageUrl: String,
-            creationDate: Date
-        })
-    })
-}
-
-module.exports={createMenuJson,saveMenu};
+module.exports={createMenuJson,saveMenuFromJson};

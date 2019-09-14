@@ -40,7 +40,7 @@ router.get('/:id/newMessage',async (req,res,next) => {
 		nutritionistID = user.nutritionistID;
 	}
 
-	res.status(200).json({newMessage : user.hasNewMessage, nutritionistID: nutritionistID});
+	res.status(200).json({hasNewMessage : user.hasNewMessage, nutritionistID: nutritionistID});
 })
 
 

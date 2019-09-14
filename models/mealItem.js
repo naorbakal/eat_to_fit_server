@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const MealItemSchema = new Schema({
     productId: Schema.Types.ObjectId,
+    productName: String,
     quantity: {type:Number ,default:undefined},
     status:String
 });

@@ -31,7 +31,7 @@ async function saveMenuFromJson(jsonMenu,getNutValues){
         date: new Date()
     });
     if(getNutValues){
-       // menu = await getNutritionalValues(menu);
+       menu = await getNutritionalValues(menu);
     }
     const res = await menu.save();
     return res;
@@ -97,28 +97,25 @@ async function createMeal(meal){
 async function createMealItem(item){
     let mealItem =await MealItem.findOne({quantity:item.quantity, productId:mongoose.Types.ObjectId(item.product._id),status:item.status}).exec();
     if(!mealItem){
-        console.log("innn")
-       const product = await Product.findById(item.product._id).exec();
         mealItem = new MealItem({ 
            quantity:item.quantity,
-           productId:product?product._id:null,
+           productId:item.product._id,
+           productName:item.product.name,
            status:item.status
        })
        mealItem = await mealItem.save();
     }
-    console.log(mealItem);
     return mealItem._id
 }
 
 async function getMealItems(mealItemsIds){
     const pArray = mealItemsIds.map(async mealItemId =>{
-        console.log(mealItemId);
         const mealItem = await MealItem.findById(mealItemId).exec();
         const quantity=mealItem.quantity;
         const product = await Product.findById(mealItem.productId).exec();
         return({
             quantity:quantity,
-            product:product?{_id:product._id,name:product.name,unitType:product.unitType}:null,
+            product:{_id:mealItem.productId,name:mealItem.productName,unitType:product?product.unitType:null},
             status:mealItem.status
         })
     });

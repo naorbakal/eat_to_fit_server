@@ -12,8 +12,9 @@ async function saveImage(image){
     fs.writeFileSync(filePath,base64Image,{encoding: 'base64'});
     const imageUrl = serverUrl + filePath.split('./').pop();
     const imageDB = new Image({
-		type: mimeType,
-		url:imageUrl
+		  type: mimeType,
+      url:imageUrl,
+      content:base64Image
     });
     return await imageDB.save();
 }

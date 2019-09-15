@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 
 const ImageSchema = new Schema({
     type:String,
-    url:String
+    url:String,
+    content:String
 })
 
 module.exports = mongoose.model('Image', ImageSchema);

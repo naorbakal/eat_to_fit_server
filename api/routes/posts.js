@@ -15,7 +15,6 @@ router.post('/',async(req,res,next)=>{
         });
         if(req.body.imageUrl){
             const image =await ImageUtils.saveImage(req.body.imageUrl);
-            console.log(image.url);
             post.imageUrl=image.url;
         }
         post.save()
@@ -41,7 +40,11 @@ router.get('/',async(req,res,next)=>{
         const to = offset*pageSize < postsfromDb.length ? offset*pageSize:postsfromDb.length;
         for (let i=from;i<to;i++){
             posts.push(postsfromDb[i]);
-        }  
+        } 
+        pArray = posts.map(async post =>{
+            return await adjustPostRespone(post)
+        });
+        posts = await Promise.all(pArray);
         res.status(200).json({
             posts
         });

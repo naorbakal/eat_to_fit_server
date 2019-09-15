@@ -14,13 +14,16 @@ router.get('/:id/menus',async (req,res,next)=>{
     try{
         let user = await User.findById(req.params.id).exec();
         let menuId = user.menusIDs;
-        let replicaMenu = await Menu.findOne({
-            replicaOf:user.menusIDs,
-            date:{ 
-                $lt: new Date(), 
-                $gte: new Date().setHours(00,00,00) 
-              }  
-            });
+        let replicaMenu;
+        if(user.menusIDs){
+               replicaMenu = await Menu.findOne({
+                replicaOf:user.menusIDs,
+                date:{ 
+                    $lt: new Date(), 
+                    $gte: new Date().setHours(00,00,00) 
+                  }  
+                });
+        }
         if(replicaMenu){
             res.status(200).json(await menuUtils.createMenuJson(replicaMenu));  
         }

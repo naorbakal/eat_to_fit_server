@@ -30,10 +30,10 @@ router.get('/',async(req, res, next) => {
     }
     else{
         if(req.query.all){
-                res.status(200).json(measurment[0]);
+                res.status(200).json(measurment);
             }
         else{
-                res.status(200).json(measurment);
+            res.status(200).json(measurment[0]);
             }
     }
  });

@@ -23,17 +23,17 @@ router.post('/',(req, res, next) => {
 
 
 router.get('/',async(req, res, next) => {
-    const mesurment = await  BodyMeasurements.find({clientID: req.query.id}).sort({_id: -1}).limit(7).exec();
+    const measurment = await  BodyMeasurements.find({clientID: req.query.id}).sort({_id: -1}).limit(7).exec();
 
-    if(mesurment.length === 0){
+    if(measurment.length === 0){
         res.status(404).json(null);
     }
     else{
         if(req.query.all){
-                res.status(200).json(mesurment[0]);
+                res.status(200).json(measurment[0]);
             }
         else{
-                res.status(200).json(mesurment);
+                res.status(200).json(measurment);
             }
     }
  });

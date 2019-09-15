@@ -37,7 +37,6 @@ router.get('/',async (req, res, next) => {
                     nut.hasNewMessage = true;
                 }
                 else if((nutClient.clientID).toString() === clientID.toString()){
-                    console.log("innn");
                     nutClient.hasNewMessage = false;
                 }
                 return nutClient;

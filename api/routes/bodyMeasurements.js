@@ -23,7 +23,7 @@ router.post('/',(req, res, next) => {
 
 
 router.get('/',async(req, res, next) => {
-    const measurment = await  BodyMeasurements.find({clientID: req.query.id}).sort({_id: -1}).limit(7).exec();
+    const measurment = await  BodyMeasurements.find({clientID: req.query.id}).sort({_id: -1}).limit(6).exec();
 
     if(measurment.length === 0){
         res.status(404).json(null);

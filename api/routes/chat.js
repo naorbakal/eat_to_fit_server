@@ -59,10 +59,17 @@ router.post('/',async (req, res, next) => {
     msg.date = new Date();
     let user;
     msg.save().then(async result => {
+        console.log(result);
+        console.log("------------------------------")
         user = await User.findById(result.receiver).exec();
+        console.log(user);
+        console.log("--------------------------------");
         if(user.isNutritionist){
             user.clientsIDs.forEach(nutClient => {
-                if(nutClient.clientID === result.sender){
+                    console.log(result.sender);
+                    console.log(nutClient.clientID);
+                if((nutClient.clientID).toString() === (result.sender).toString()){
+                    console.log("inn");
                     nutClient.hasNewMessage = true;   
                 }                
             });

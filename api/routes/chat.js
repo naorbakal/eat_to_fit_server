@@ -33,6 +33,9 @@ router.get('/',async (req, res, next) => {
                 if(nutClient.clientID !== clientID && nutClient.hasNewMessage === true ){
                     nutClient.hasNewMessage = true;
                 }
+                else if(nutClient.clientID === clientID){
+                    nutClient.hasNewMessage = false;
+                }
                 return nutClient;
             })
             nut.clientsIDs = clientsArr;

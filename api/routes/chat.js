@@ -57,24 +57,21 @@ router.get('/',async (req, res, next) => {
 router.post('/',async (req, res, next) => {
     let msg = new Message(req.body);
     msg.date = new Date();
+    let clientsArr;
     let user;
     msg.save().then(async result => {
-        console.log(result);
-        console.log("------------------------------")
         user = await User.findById(result.receiver).exec();
-        console.log(user);
-        console.log("--------------------------------");
         if(user.isNutritionist){
-            user.clientsIDs.forEach(nutClient => {
-                    console.log(result.sender);
-                    console.log(nutClient.clientID);
+            clientsArr = user.clientsIDs.map(nutClient => {           
                 if((nutClient.clientID).toString() === (result.sender).toString()){
-                    console.log("inn");
-                    nutClient.hasNewMessage = true;   
-                }                
+                    nutClient.hasNewMessage = true;
+                }
+                    return nutClient;             
             });
         }
-        user.hasNewMessage = true;   
+        user.clientsIDs = clientsArr;
+        user.hasNewMessage = true;  
+        user.markModified('clientsIDs');
         user.save().then(result => {
             res.status(200).json({message : "message sent"});
         })

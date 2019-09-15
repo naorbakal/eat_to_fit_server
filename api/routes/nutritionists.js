@@ -88,6 +88,9 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 					hasNewMessage: hasNewMessage
 				});
 		}));
+
+		clients.sort((a, b) => a.firstName.localeCompare(b.firstName));
+
 		res.status(200).json({clients});
 	}
 		else{

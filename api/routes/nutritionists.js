@@ -5,7 +5,8 @@ const router = express.Router();
 
 const User = require ('../../models/user');
 const Menu = require ('../../models/menu');
-const meetingUtils = require('./commons/meetingsUtils');
+const RegistrationUtils = require('./commons/registrationUtils');
+
 
 // insert new User
 
@@ -78,6 +79,8 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 					}
 				});
 				
+				clients.push(await RegistrationUtils.setUserLoginSignUpResponse(result));
+				/*
 				clients.push({
 					_id:result._id,
 					profilePicture: result.profilePicture.content,
@@ -87,6 +90,7 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 					email:result.email,
 					hasNewMessage: hasNewMessage
 				});
+				*/
 		}));
 		res.status(200).json({clients});
 	}

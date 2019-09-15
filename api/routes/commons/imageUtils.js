@@ -14,7 +14,7 @@ async function saveImage(image){
     const imageDB = new Image({
 		  type: mimeType,
       url:imageUrl,
-      content:base64Image
+      content: Buffer.from(base64Image,"base64")
     });
     return await imageDB.save();
 }

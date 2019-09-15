@@ -8,6 +8,7 @@ async function setUserLoginSignUpResponse(user){
     let profilePictureInBits=null;
     if(user.profilePicture){
         profilePictureInBits=await Image.findById(user.profilePicture).exec();
+        profilePictureInBits=profilePictureInBits.content;
     }
     return{
         userId:user._id,

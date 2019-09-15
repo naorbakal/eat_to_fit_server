@@ -36,7 +36,7 @@ router.get('/',async (req, res, next) => {
                 return nutClient;
             })
             nut.clientsIDs = clientsArr;
-            user.markModified('clientsIDs');
+            nut.markModified('clientsIDs');
             await nut.save();
         })
         User.findById(clientID).then(client => {

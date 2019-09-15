@@ -77,10 +77,10 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 						hasNewMessage = nutClient.hasNewMessage;
 					}
 				});
-	
+				
 				clients.push({
 					_id:result._id,
-					profilePicture: result.profilePicture,
+					profilePicture: result.profilePicture.content,
 					gender: result.gender,
 					firstName:result.firstName,
 					lastName:result.lastName,

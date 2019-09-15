@@ -7,8 +7,8 @@ const router = express.Router();
 const User = require ('../../models/user');
 const Auth = require ('../auth');
 //handles login
-router.post('/',Auth.emailPasswordValidation,(req, res, next) => {
-    user = commons.setUserLoginSignUpResponse(req.user);
+router.post('/',Auth.emailPasswordValidation,async (req, res, next) => {
+    user = await commons.setUserLoginSignUpResponse(req.user);
     res.status(200).json({
         message: "Handle SignUp req to /signUp",
         user

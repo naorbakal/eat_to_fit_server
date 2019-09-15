@@ -22,14 +22,13 @@ router.post('/', async (req, res, next) => {
         else{
             let user = new User(req.body);
             if(req.body.image){
-                console.log("inn");
                 const image =await ImageUtils.saveImage(req.body.image);
                 user.profilePicture=image._id;
             }
             user
                 .save()
-                .then(result => {
-                    user = commons.setUserLoginSignUpResponse(result);
+                .then(async result => {
+                    user = await commons.setUserLoginSignUpResponse(result);
                     res.status(201).json({  
                         message: "Handle SignUp req to /signUp",
                         user

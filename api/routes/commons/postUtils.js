@@ -13,7 +13,9 @@ async function adjustPostRespone(post){
         authorID: post.authorID,
         headline: post.headline,
         content: post.content,
-        image: image,
+        image: image.content,
         creationDate: post.creationDate
     })
 }
+
+module.exports={adjustPostRespone};

@@ -15,6 +15,7 @@ router.get('/',async (req, res, next) => {
     let messages;
     let chat;
     let receiverName;
+    let clientsArr;
 
     if(!isNutritionist){
         User.findById(clientID).then( async client => {
@@ -28,11 +29,14 @@ router.get('/',async (req, res, next) => {
     else{
         User.findById(nutritionistID).then(async nut => {
             nut.hasNewMessage = false;
-            nut.clientsIDs.forEach(nutClient => {
+            clientsArr = nut.clientsIDs.map(nutClient => {
                 if(nutClient.clientID !== clientID && nutClient.hasNewMessage === true ){
-                    nut.hasNewMessage = true;
+                    nutClient.hasNewMessage = true;
                 }
+                return nutClient;
             })
+            nut.clientsIDs = clientsArr;
+            user.markModified('clientsIDs');
             await nut.save();
         })
         User.findById(clientID).then(client => {

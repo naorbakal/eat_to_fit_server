@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const express = require('express');
 const commons = require('./commons/registrationUtils');
 const router = express.Router();
-//const auth = require ("./auth");
 
 const User = require ('../../models/user');
 const ImageUtils = require('./commons/imageUtils');
@@ -23,12 +22,12 @@ router.post('/', async (req, res, next) => {
             let user = new User(req.body);
             if(req.body.image){
                 const image =await ImageUtils.saveImage(req.body.image);
-                user.profilePicture=image.url;
+                user.profilePicture=image._id;
             }
             user
                 .save()
-                .then(result => {
-                    user = commons.setUserLoginSignUpResponse(result);
+                .then(async result => {
+                    user = await commons.setUserLoginSignUpResponse(result);
                     res.status(201).json({  
                         message: "Handle SignUp req to /signUp",
                         user

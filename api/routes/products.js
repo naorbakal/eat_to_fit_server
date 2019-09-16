@@ -26,20 +26,6 @@ router.get('/',async (req,res,next) => {
     let products = await Product.find().collation({locale:'he' , strength : 2}).sort({ name : 1}).exec();
     
     res.status(200).json({data : products});
-    /*
-    try{
-        Product.find({}, function(err, products) {
-        
-            res.status(200).json({data : products});  
-          });
-        
-    }
-    catch(err){
-        res.status(500).json({
-            message:err
-        });
-    }
-    */
 })
 
 

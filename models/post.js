@@ -5,7 +5,7 @@ const PostSchema = new Schema({
     authorID: Schema.Types.ObjectId, //nutritionist
     headline: String,
     content: String,
-    imageUrl: String,
+    image: {type: Schema.Types.ObjectId, default:null},
     creationDate: Date
 });
 

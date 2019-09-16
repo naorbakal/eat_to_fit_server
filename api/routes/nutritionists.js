@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const express = require('express');
 const router = express.Router();
-//const auth = require ("./auth");
 
 const User = require ('../../models/user');
 const Menu = require ('../../models/menu');
-const meetingUtils = require('./commons/meetingsUtils');
+const RegistrationUtils = require('./commons/registrationUtils');
+
 
 // insert new User
 
@@ -77,16 +77,8 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 						hasNewMessage = nutClient.hasNewMessage;
 					}
 				});
-	
-				clients.push({
-					_id:result._id,
-					profilePicture: result.profilePicture,
-					gender: result.gender,
-					firstName:result.firstName,
-					lastName:result.lastName,
-					email:result.email,
-					hasNewMessage: hasNewMessage
-				});
+				
+				clients.push(await RegistrationUtils.setUserLoginSignUpResponse(result));
 		}));
 
 		clients.sort((a, b) => a.firstName.localeCompare(b.firstName));
@@ -145,7 +137,7 @@ router.get('/:nutritionistId/menus',async(req,res,next)=>{
     }
 })
 
-//
+
 
 
 module.exports = router;

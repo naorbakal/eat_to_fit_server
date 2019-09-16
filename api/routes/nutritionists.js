@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const express = require('express');
 const router = express.Router();
-//const auth = require ("./auth");
 
 const User = require ('../../models/user');
 const Menu = require ('../../models/menu');
@@ -80,17 +79,6 @@ router.get('/:nutritionistID/users', async (req,res,next) =>{
 				});
 				
 				clients.push(await RegistrationUtils.setUserLoginSignUpResponse(result));
-				/*
-				clients.push({
-					_id:result._id,
-					profilePicture: result.profilePicture.content,
-					gender: result.gender,
-					firstName:result.firstName,
-					lastName:result.lastName,
-					email:result.email,
-					hasNewMessage: hasNewMessage
-				});
-				*/
 		}));
 		res.status(200).json({clients});
 	}
@@ -146,7 +134,7 @@ router.get('/:nutritionistId/menus',async(req,res,next)=>{
     }
 })
 
-//
+
 
 
 module.exports = router;
